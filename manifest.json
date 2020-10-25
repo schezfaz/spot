@@ -9,8 +9,23 @@
         "16": "spot-16.png"
     },
 
+    // "browser_action": {
+    //     "default_icon": "spot-16.png",
+    //     "default_popup": "popup.html"    
+    // }
+
+    "background": {
+        "scripts": [
+            "./background.js"
+        ]
+    },
+    // "options_page": "./options.html",
     "browser_action": {
-        "default_icon": "spot-16.png",
-        "default_popup": "popup.html"    
-    }
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "identity",
+        "tabs",
+        "storage"
+    ]
 }
