@@ -26,6 +26,7 @@
     "permissions": [
         "identity",
         "tabs",
-        "storage"
+        "storage",
+        "https://api.spotify.com/"
     ]
 }
