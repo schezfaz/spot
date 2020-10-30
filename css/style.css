@@ -1,0 +1,145 @@
+@font-face {
+    font-family: GothamBold;
+    src: url(../fonts/Gotham-Bold.otf) format("truetype");
+}
+
+@font-face {
+    font-family: GothamLight;
+    src: url(../fonts/Gotham-Light.otf) format("truetype");
+}
+
+body {
+    width: 350px;
+    min-height: 300px;
+    height: auto;
+    background-color: black;
+}
+
+h3 {
+    margin: auto;
+    color: #1DB954;
+    font-family: GothamBold;
+    font-size: large;
+}
+
+th {
+    color: #FFF;
+    font-family: GothamBold;
+    text-align: center; 
+    vertical-align: middle;
+}
+
+td {
+    color: #FFF;
+    font-family: GothamLight;
+    text-align: center; 
+    vertical-align: middle;
+}
+
+table {
+    position: relative;
+    margin-top: 40%;
+    margin-left: 20%;
+}
+
+a {
+    color: #1DB954;
+    font-family: GothamBold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.searchBox {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform:  translate(-50%,50%);
+    background: #2f3640;
+    height: 40px;
+    border-radius: 40px;
+    padding: 10px;
+
+}
+
+.searchBox:hover > .searchInput {
+    width: 150px;
+    padding: 0 6px;
+}
+
+.searchBox:hover > .searchButton {
+  background: white;
+  color : #2f3640;
+}
+
+.searchButton {
+    color: white;
+    float: right;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2f3640;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+}
+
+.searchInput {
+    border:none;
+    background: none;
+    outline:none;
+    font-family: "GothamLight";
+    float:left;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    transition: 0.4s;
+    line-height: 40px;
+    width: 0px;
+
+}
+
+@media screen and (max-width: 620px) {
+.searchBox:hover > .searchInput {
+    width: 100px;
+    padding: 0 6px;
+}
+}
+
+.btn {
+	background-image: linear-gradient(to right, #1DB954 0%, #1DB954 100%);
+	border-radius: 40px;
+    box-sizing: border-box;
+	color: #1DB954;
+	display: block;
+	font-family: GothamBold;
+	height: 50px;
+	letter-spacing: 1px;
+	margin: 30px auto;
+	padding: 4px;
+	position: relative;
+  text-decoration: none;
+	text-transform: uppercase;
+	width: 200px;
+	z-index: 2;
+}
+
+.btn:hover {
+	color: #fff;
+}
+
+.btn span {
+	align-items: center;
+	background: #e7e8e9;
+	border-radius: 40px;
+	display: flex;
+	justify-content: center;
+	height: 100%;
+	transition: background .5s ease;
+	width: 100%;
+}
+
+.btn:hover span {
+	background: transparent;
+}

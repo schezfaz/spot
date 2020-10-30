@@ -4,28 +4,25 @@
     "version": "1.0",
     "description": "An extension that allows you add a song playing on Youtube to any of your playlists on spotify.",
     "icons": {
-        "128": "spot-128.png",
-        "48": "spot-48.png",
-        "16": "spot-16.png"
+        "128": "images/spot-128.png",
+        "48": "images/spot-48.png",
+        "16": "images/spot-16.png"
     },
-
-    // "browser_action": {
-    //     "default_icon": "spot-16.png",
-    //     "default_popup": "popup.html"    
-    // }
 
     "background": {
         "scripts": [
             "./background.js"
         ]
     },
-    // "options_page": "./options.html",
+
     "browser_action": {
         "default_popup": "popup.html"
     },
+
     "permissions": [
         "identity",
         "tabs",
-        "storage"
+        "storage",
+        "https://api.spotify.com/"
     ]
 }
