@@ -5,53 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        body {
-            width: 300px;
-            height: auto;
-        }
-
-        button {
-            margin-top: 20px;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50%;
-            height: 25%;
-            padding: 5px;
-            font-size: 2.5em;
-            background-color: red;
-            border-radius: 5px;
-            text-align: center;
-            color: white;
-            font-family: monospace;
-            font-weight: bold;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition-duration: 0.3s;
-        }
-
-        /* div:hover {
-            background-color: black;
-            transform: translateX(-50%) scale(1.3);
-        } */
-    </style>
+    <link rel="stylesheet" href="css/material_icons.css">
+    <link rel="stylesheet" href="css/fontawesome.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <h1>Successfully Signed-In</h1>
+    <h3>Successfully Signed-In</h3>
     <form id="search-form">
-        <input type="text" id="query" value="" class="form-control" placeholder="Type a Song Name" />
-        <input type="submit" id="search" class="btn btn-primary" value="Search" />
+        <div class="searchBox">
+            <input class="searchInput"  autocomplete="off" type="text" id="query" name="" placeholder="Search">
+            <button id="search" class="searchButton" type="submit">
+                <i class="material-icons">
+                    search
+                </i>
+            </button>
+        </div>
     </form>
     <div id="results"></div>
-    <button id='sign-out'>Sign Out</div>
+    <a id='sign-out' href="#">Sign Out</a>
     <script src="./jquery-3.5.1.min.js"></script>
-    <script id="results-template" type="text/x-handlebars-template">
-        {{#each albums.items}}
-        <div style="background-image:url({{images.0.url}})" data-album-id="{{id}}" class="cover"></div>
-        {{/each}}
-    </script>
     <script src="./popup-signed-in-script.js"></script>
 </body>
 
