@@ -1,7 +1,7 @@
-const CLIENT_ID = encodeURIComponent('64fb35d3e3de4fecb0e0d60cd76dd006'); // change this according to your Spotify OAuth Client ID
+const CLIENT_ID = encodeURIComponent('e398a5b2c6eb42bfa305efab6caefc72'); // change this according to your Spotify OAuth Client ID
 const EXTENSION_ID = 'hflkbdhappjboleecikmjbfnjhifdhhm'; // Change this according to your extension
 const RESPONSE_TYPE = encodeURIComponent('token');
-const REDIRECT_URI = encodeURIComponent('https://hflkbdhappjboleecikmjbfnjhifdhhm.chromiumapp.org/');
+const REDIRECT_URI = encodeURIComponent('https://gfhecgoaelkeeippfcekipomkpfmdkjp.chromiumapp.org/');
 const SHOW_DIALOG = encodeURIComponent('true');
 
 const SCOPE = encodeURIComponent("user-library-modify", "playlist-read-private", "playlist-modify-public", "playlist-modify-private");
