@@ -10,8 +10,8 @@
 
 body {
     width: 350px;
-    /* min-height: 300px; */
-    /* height: auto; */
+    min-height: 200px;
+    height: auto; 
     background-color: black;
     border: none;
 }
