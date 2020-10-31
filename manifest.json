@@ -20,9 +20,9 @@
     },
 
     "permissions": [
+        "storage",
         "identity",
         "tabs",
-        "storage",
         "https://api.spotify.com/"
     ]
 }
