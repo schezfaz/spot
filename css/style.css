@@ -16,6 +16,10 @@ body {
     border: none;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
 #spot-title {
     text-align: center;
     margin: auto;
@@ -54,10 +58,11 @@ td {
     vertical-align: middle;
 }
 
+
 table {
     position: relative;
-    margin-top: 40%;
-    margin-left: 20%;
+    margin-top: 30%;
+    font-size: 20px;
 }
 
 a {
@@ -78,17 +83,22 @@ a {
     height: 40px;
     border-radius: 40px;
     padding: 10px;
-
-}
-
-.searchBox:hover > .searchInput {
-    width: 150px;
+    width: 200px;
     padding: 0 6px;
 }
 
-.searchBox:hover > .searchButton {
-  background: white;
-  color : #2f3640;
+.searchInput {
+    border:none;
+    background: none;
+    outline:none;
+    font-family: "GothamLight";
+    float:left;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    transition: 0.4s;
+    line-height: 40px;
+    width: 0px;
 }
 
 .searchButton {
@@ -104,19 +114,21 @@ a {
     transition: 0.4s;
 }
 
-.searchInput {
-    border:none;
-    background: none;
-    outline:none;
-    font-family: "GothamLight";
-    float:left;
-    padding: 0;
-    color: white;
-    font-size: 16px;
-    transition: 0.4s;
-    line-height: 40px;
-    width: 0px;
+.searchInput{
+    width: 150px;
+    color: #FFF;
+}
 
+
+/* 
+.searchBox:hover > .searchInput {
+    width: 150px;
+    padding: 0 6px;
+}
+
+.searchBox:hover > .searchButton {
+  background: white;
+  color : #2f3640;
 }
 
 @media screen and (max-width: 620px) {
@@ -124,7 +136,7 @@ a {
     width: 100px;
     padding: 0 6px;
 }
-}
+} */
 
 .btn {
 	background-image: linear-gradient(to right, #1DB954 0%, #1DB954 100%);
