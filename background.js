@@ -11,6 +11,8 @@ let ACCESS_TOKEN = '';
 
 let user_signed_in = false;
 
+let display_name = '';
+
 function create_spotify_end_point() {
     STATE = encodeURIComponent('meet' + Math.random().toString(36).substring(2, 15));
 
@@ -125,13 +127,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                             console.log("ACCESS TOKEN " + ACCESS_TOKEN)
                             user_signed_in = true;
 
+                            var access_token_obj = { "access_token": ACCESS_TOKEN };
+
                             //Store a flag so that the sign in popup does not appear every time
                             chrome.storage.sync.set({ "signed_in": true }, function () {
-                                console.log("User signed in. Data saved.")
+                                console.log("User signed in. Data saved.");
                             });
 
-                            chrome.storage.sync.set({ "access_token": ACCESS_TOKEN }, function () {
-                                console.log("Access token saved.")
+                            chrome.storage.sync.set(access_token_obj, function () {
+                                console.log("Access token saved.");
                             });
 
 
