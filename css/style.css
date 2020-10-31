@@ -10,9 +10,27 @@
 
 body {
     width: 350px;
-    min-height: 300px;
-    height: auto;
+    /* min-height: 300px; */
+    /* height: auto; */
     background-color: black;
+    border: none;
+}
+
+#spot-title {
+    text-align: center;
+    margin: auto;
+    color: #1DB954;
+    font-family: GothamBold;
+    font-size: 40px;
+}
+
+#spot-intro{
+    text-align: center;
+    margin: auto;
+    color: #FFF;
+    font-family: GothamLight;
+    font-weight: lighter;
+    font-size: 18px;
 }
 
 h3 {
@@ -45,6 +63,7 @@ table {
 a {
     color: #1DB954;
     font-family: GothamBold;
+    font-size: 15px;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -116,12 +135,12 @@ a {
 	font-family: GothamBold;
 	height: 50px;
 	letter-spacing: 1px;
-	margin: 30px auto;
-	padding: 4px;
+    margin: 20px 18%;
+	padding: 3px;
 	position: relative;
-  text-decoration: none;
+    text-decoration: none;
 	text-transform: uppercase;
-	width: 200px;
+	width: 250px;
 	z-index: 2;
 }
 
@@ -131,7 +150,8 @@ a {
 
 .btn span {
 	align-items: center;
-	background: #e7e8e9;
+    background: #e7e8e9;
+    padding: 1px;
 	border-radius: 40px;
 	display: flex;
 	justify-content: center;
