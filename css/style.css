@@ -119,8 +119,9 @@ table {
 .searchBox {
     position: absolute;
     top: 10%;
-    left: 50%;
-    transform:  translate(-50%,50%);
+    margin-left: 20%;
+    /* left: 23%; */
+    /* transform:  translate(-50%,50%); */
     background: #2f3640;
     height: 40px;
     border-radius: 40px;
