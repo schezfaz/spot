@@ -58,10 +58,18 @@ body::-webkit-scrollbar {
     right: 10px;
 }
 
+#playlist-view-header{
+    color: white;
+    font-size: 15px;
+    margin-top: 80px;
+    text-align: center;
+    font-family: GothamLight;
+}
+
 #playlists{
     color: white; 
     height: 300px; 
-    margin: 80px 10px 0px 10px;
+    margin: 10px 10px 0px 10px;
     border: 1px solid #1DB954;
     overflow-y: scroll;
 }

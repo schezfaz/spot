@@ -1,6 +1,7 @@
 var resultsPlaceholder = document.getElementById('results');
 var displayName = document.getElementById('displayName');
 var playlists = document.getElementById("playlists");
+var playlistViewHeader = document.getElementById("playlist-view-header");
 
 function getToken(){
     chrome.storage.sync.get('access_token', result => {
@@ -62,6 +63,7 @@ function getPlaylists(ACCESS_TOKEN, user_id){
             }
         });
         console.log(owned_playlists.length);
+        playlistViewHeader.innerHTML = "Choose from " + owned_playlists.length + " playlists!";
     })
 }
 
