@@ -4,7 +4,11 @@ const RESPONSE_TYPE = encodeURIComponent('token');
 const REDIRECT_URI = encodeURIComponent('https://gfhecgoaelkeeippfcekipomkpfmdkjp.chromiumapp.org/');
 const SHOW_DIALOG = encodeURIComponent('true');
 
-const SCOPE = encodeURIComponent("user-library-modify", "playlist-read-private", "playlist-modify-public", "playlist-modify-private");
+const SCOPE = encodeURIComponent("user-library-modify", 
+                                "playlist-read-private", 
+                                "playlist-modify-public", 
+                                "playlist-modify-private",
+                                "playlist-read-collaborative");
 
 let STATE = '';
 let ACCESS_TOKEN = '';
