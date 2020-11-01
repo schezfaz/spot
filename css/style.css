@@ -58,6 +58,17 @@ body::-webkit-scrollbar {
     right: 10px;
 }
 
+#playlists{
+    color: white; 
+    height: 300px; 
+    margin: 80px 10px 0px 10px;
+    border: 1px solid #1DB954;
+    overflow-y: scroll;
+}
+
+#playlists::-webkit-scrollbar {
+    display: none;
+}
 
 a {
     color: #1DB954;
