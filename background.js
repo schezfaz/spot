@@ -1,7 +1,5 @@
-const CLIENT_ID = encodeURIComponent('e398a5b2c6eb42bfa305efab6caefc72'); // change this according to your Spotify OAuth Client ID
-const EXTENSION_ID = 'hflkbdhappjboleecikmjbfnjhifdhhm'; // Change this according to your extension
 const RESPONSE_TYPE = encodeURIComponent('token');
-const REDIRECT_URI = encodeURIComponent('https://gfhecgoaelkeeippfcekipomkpfmdkjp.chromiumapp.org/');
+const REDIRECT_URI = encodeURIComponent('https://' + EXTENSION_ID + '.chromiumapp.org/');
 const SHOW_DIALOG = encodeURIComponent('true');
 
 const SCOPE = encodeURIComponent("user-library-modify", 

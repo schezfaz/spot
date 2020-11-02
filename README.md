@@ -17,8 +17,9 @@ An extension that allows you to directly add a song to your spotify playlist, on
 - Done!
 
 ### Config Changes
-- Open ```background.js```
-- Replace ```CLIENT_ID``` and ```REDIRECT_URI``` with your own values
+- Rename ```config_sample.js``` to ```config.js```
+- Open ```config.js```
+- Replace ```CLIENT_ID``` and ```EXTENSION_ID``` with your own values
 - Reload the extension
 
 ## How to use
