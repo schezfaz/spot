@@ -83,17 +83,19 @@ function formatParams(params) {
 }
 
 function rightClickSearch(word){
-    console.log("Sending request..");
-    searchSpotify(word);
-    chrome.tabs.create({
-        url: chrome.extension.getURL('popup-signed-in.html'),
-        active: false
-    }, function(tab) {
-        // After the tab has been created, open a window to inject the tab
-        chrome.windows.create({
-            tabId: tab.id,
-            type: 'popup',
-            focused: true
+    //Store the word in storage, so it can be accessed by the frontend.
+    chrome.storage.sync.set({ "last_search": word }, function () {
+        console.log("Last Query saved.");
+        chrome.tabs.create({
+            url: chrome.extension.getURL('popup-signed-in.html'),
+            active: false
+        }, function(tab) {
+            // After the tab has been created, open a window to inject the tab
+            chrome.windows.create({
+                tabId: tab.id,
+                type: 'popup',
+                focused: true
+            });
         });
     });
 }
