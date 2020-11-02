@@ -1,7 +1,7 @@
-const CLIENT_ID = encodeURIComponent('e398a5b2c6eb42bfa305efab6caefc72'); // change this according to your Spotify OAuth Client ID
+const CLIENT_ID = encodeURIComponent('64fb35d3e3de4fecb0e0d60cd76dd006'); // change this according to your Spotify OAuth Client ID
 const EXTENSION_ID = 'hflkbdhappjboleecikmjbfnjhifdhhm'; // Change this according to your extension
 const RESPONSE_TYPE = encodeURIComponent('token');
-const REDIRECT_URI = encodeURIComponent('https://gfhecgoaelkeeippfcekipomkpfmdkjp.chromiumapp.org/');
+const REDIRECT_URI = encodeURIComponent('https://hflkbdhappjboleecikmjbfnjhifdhhm.chromiumapp.org/');
 const SHOW_DIALOG = encodeURIComponent('true');
 
 const SCOPE = encodeURIComponent("user-library-modify", 
@@ -81,6 +81,29 @@ function formatParams(params) {
         })
         .join("&")
 }
+
+function rightClickSearch(word){
+    console.log("Sending request..");
+    searchSpotify(word);
+    chrome.tabs.create({
+        url: chrome.extension.getURL('popup-signed-in.html'),
+        active: false
+    }, function(tab) {
+        // After the tab has been created, open a window to inject the tab
+        chrome.windows.create({
+            tabId: tab.id,
+            type: 'popup',
+            focused: true
+        });
+    });
+}
+
+// Add right-click functionality
+chrome.contextMenus.create({
+    title: "SPOT!",
+    contexts:["selection"],
+    onclick: rightClickSearch
+})
 
 // Search spotify function
 function searchSpotify(query) {
