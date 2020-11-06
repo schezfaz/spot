@@ -1,0 +1,2 @@
+const CLIENT_ID = encodeURIComponent('YOUR_CLIENT_ID_HERE'); // change this according to your Spotify OAuth Client ID
+const EXTENSION_ID = 'YOUR_EXTENSION ID HERE'; // Change this according to your extension
