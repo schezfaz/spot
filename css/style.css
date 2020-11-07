@@ -80,7 +80,9 @@ body::-webkit-scrollbar {
 #results{
     margin-top: 80px;
     padding-left: 35px;
-    font-size: 12px;
+    font-size: 13px;
+    font-family: GothamLight;
+    font-weight: bold;
 }
 
 #topThreeTracks{
@@ -89,6 +91,15 @@ body::-webkit-scrollbar {
     margin: 10px 45px;
     padding: 0px;
 }
+
+.top3 {
+    padding-bottom: 5px;
+}
+
+.top3:hover{
+    color: #1DB954;
+}
+
 
 a {
     color: #1DB954;

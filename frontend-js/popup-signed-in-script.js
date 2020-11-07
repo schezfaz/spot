@@ -1,7 +1,10 @@
 var topThreeTracks = document.getElementById('topThreeTracks');
+var trackSearch = document.getElementById('query');
 var displayName = document.getElementById('displayName');
 var playlists = document.getElementById("playlists");
 var playlistViewHeader = document.getElementById("playlist-view-header");
+
+var selectedSongID ='';
 var ACCESS_TOKEN='';
 
 function getToken(){
@@ -10,7 +13,6 @@ function getToken(){
         ACCESS_TOKEN  = result['access_token'];
         if (ACCESS_TOKEN != undefined) {
             getUserName(ACCESS_TOKEN);
-            // getPlaylists(ACCESS_TOKEN);
         }
     });
     // chrome.storage.sync.get(null, function(items) {
@@ -90,57 +92,27 @@ document.getElementById('search-form').addEventListener('submit', function (e) {
         {headers: {'Authorization': 'Bearer ' + ACCESS_TOKEN}})
     .then(response => response.json()) //display only top 3 results
     .then(songsJSON => {
-        console.log(songsJSON);
         //getting first 3
-        console.log("TRAX: " + songsJSON['tracks']['items'][0]['name']);
         if(songsJSON['tracks']['items'].length > 0){
             topThreeTracks.innerHTML = "";
             for (var i = 0; i < 3; i++){
                 track = songsJSON['tracks']['items'][i]['name'];
                 artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
                 trackID = songsJSON['tracks']['items'][i]['id'];
-
-                console.log("TRACK: " + track);
-                console.log("ARTIST: "+  artist);
-                console.log("SONG ID: "+  trackID);
-
                 const song = document.createElement('li');
                 song.setAttribute('id',trackID);
                 song.setAttribute('class','top3');
                 song.innerHTML = track + " - " + artist;
-                song.onclick = function() { trackSelected(this.id) };
+                song.onclick = function() {trackSelected(this.id)};
                 topThreeTracks.append(song);
             }
-
-            // tableResp = '<table class="table table-dark" id="trackTable"><tbody>';
-            // for (var i = 0; i < 3; i++){
-            //     track = songsJSON['tracks']['items'][i]['name'];
-            //     artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
-            //     trackID = songsJSON['tracks']['items'][i]['id'];
-
-            //     console.log("TRACK: " + track);
-            //     console.log("ARTIST: "+  artist);
-            //     console.log("SONG ID: "+  trackID);
-
-            //     tableResp += "<tr><td id='"+trackID+"'>" + track + "</td>"; //onclick='trackSelected(this.id)'
-            //     tableResp += "<td  id='"+trackID+"'>" + artist + "</td></tr>";
-            // }
-
-            // tableResp += "</tbody></table>"
-            // resultsPlaceholder.innerHTML = tableResp;
-
-            // var trackTable = document.getElementById('trackTable');
-            // var cells = trackTable.getElementsByTagName("td"); 
-            // for (var i = 0; i < cells.length; i++) { 
-            //     // console.log("CELL ID: " + cells[i].id);
-            //     trackID =  cells[i].id;
-            //     cells[i].onclick = function(){trackSelected(trackID)};
-            //  }
-
         }
     }); 
 }, false);
 
 function trackSelected(trackID){
-    console.log("TRAKCSELECTED: " + trackID);
+    var trackElement = document.getElementById(trackID);
+    trackSearch.value = ((trackElement.innerHTML.length > 16) ? trackElement.innerHTML.substring(0,13)  + "..." : trackElement.innerHTML);
+    selectedSongID = trackID;
+    console.log("Selected Song ID: " + selectedSongID);
 }
