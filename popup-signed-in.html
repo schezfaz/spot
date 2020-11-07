@@ -11,11 +11,11 @@
 </head>
 
 <body>
-    <h1 id="spot-title" style="font-size: 25px;">SPOT<h1>
+    <h1 id="spot-title" style="font-size: 25px;">SPOT</h1>
     <div id="displayName"></div>
     <form id="search-form">
-        <div class="searchBox">
-            <input class="searchInput"  autocomplete="off" type="text" id="query" name="" placeholder="Search">
+        <div class="searchBox" id="searchBox">
+            <input class="searchInput"  autocomplete="off" type="text" id="query" name="" placeholder="Search songs">
             <button id="search" class="searchButton" type="submit">
                 <i class="material-icons">
                     search
@@ -23,7 +23,9 @@
             </button>
         </div>
     </form>
-    <div id="results"></div>
+    <div id="results">
+        <ul id="topThreeTracks"></ul>
+    </div>
     <div id="playlist-view-header"></div>
     <div id="playlists"></div>
     <div id="ADD" style="color: white;">ADDDD</div>

@@ -82,29 +82,6 @@ function formatParams(params) {
         .join("&")
 }
 
-// Search spotify function
-function searchSpotify(query) {
-    var xhr = new XMLHttpRequest();
-    var params = {
-        q: query,
-        type: 'track'
-    }
-    xhr.open("GET", "https://api.spotify.com/v1/search" + formatParams(params), true);
-    if(ACCESS_TOKEN==null){
-        console.log("Error, ACCESS_TOKEN undefined");
-        return
-    }
-    xhr.setRequestHeader('Authorization', 'Bearer '+ACCESS_TOKEN)
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            // JSON.parse does not evaluate the attacker's scripts.
-            var resp = JSON.parse(xhr.responseText);
-            chrome.runtime.sendMessage({type:'searchResp', data: resp});
-        }
-    }
-    xhr.send();
-}
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message === 'login') {
         if (user_signed_in) {
@@ -167,9 +144,5 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             sendResponse({ message: 'success' });
         });
         return true;
-    }
-
-    else if (request.message === 'search'){
-        searchSpotify(request.data);
     }
 });

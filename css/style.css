@@ -10,7 +10,7 @@
 
 body {
     width: 350px;
-    min-height: 200px;
+    min-height: 150px;
     height: auto; 
     background-color: black;
     border: none;
@@ -61,7 +61,6 @@ body::-webkit-scrollbar {
 #playlist-view-header{
     color: white;
     font-size: 15px;
-    margin-top: 80px;
     text-align: center;
     font-family: GothamLight;
 }
@@ -77,6 +76,38 @@ body::-webkit-scrollbar {
 #playlists::-webkit-scrollbar {
     display: none;
 }
+
+#results{
+    margin-top: 80px;
+    padding-left: 35px;
+    font-size: 13px;
+    font-family: GothamLight;
+    font-weight: bold;
+}
+
+#topThreeTracks{
+    color: white;
+    list-style: square;
+    margin: 10px 45px;
+    padding: 0px;
+}
+
+.top3 {
+    padding-bottom: 5px;
+}
+
+.top3:hover{
+    color: #1DB954;
+}
+
+.noSongMessage{
+    font-size: 15px;
+    color: #1DB954;
+    font-family: GothamBold;
+    font-weight: 3px;
+    padding-bottom: 2px;
+}
+
 
 a {
     color: #1DB954;
