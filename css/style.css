@@ -78,6 +78,10 @@ body::-webkit-scrollbar {
     display: none;
 }
 
+#topThreeTracks{
+    color: white;
+}
+
 a {
     color: #1DB954;
     font-family: GothamBold;
