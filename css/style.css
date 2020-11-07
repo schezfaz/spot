@@ -10,7 +10,7 @@
 
 body {
     width: 350px;
-    min-height: 200px;
+    min-height: 150px;
     height: auto; 
     background-color: black;
     border: none;
@@ -98,6 +98,14 @@ body::-webkit-scrollbar {
 
 .top3:hover{
     color: #1DB954;
+}
+
+.noSongMessage{
+    font-size: 15px;
+    color: #1DB954;
+    font-family: GothamBold;
+    font-weight: 3px;
+    padding-bottom: 2px;
 }
 
 
