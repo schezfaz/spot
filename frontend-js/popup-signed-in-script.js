@@ -60,11 +60,17 @@ function getPlaylists(ACCESS_TOKEN, user_id){
                 playlists.appendChild(each_playlist);
                 // playlists.innerHTML= playlists.innerHTML + playlist.name + "\n";
                 console.log(playlist.name);
+
+                each_playlist.onclick = () => selectPlaylist(ACCESS_TOKEN, playlist.id);
             }
         });
         console.log(owned_playlists.length);
         playlistViewHeader.innerHTML = "Choose from " + owned_playlists.length + " playlists!";
     })
+}
+
+function selectPlaylist(ACCESS_TOKEN, playlist_id){
+    console.log("Playlist Selected: "  + playlist_id);
 }
 
 getToken();
