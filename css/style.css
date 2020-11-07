@@ -61,7 +61,6 @@ body::-webkit-scrollbar {
 #playlist-view-header{
     color: white;
     font-size: 15px;
-    margin-top: 80px;
     text-align: center;
     font-family: GothamLight;
 }
@@ -78,8 +77,17 @@ body::-webkit-scrollbar {
     display: none;
 }
 
+#results{
+    margin-top: 80px;
+    padding-left: 35px;
+    font-size: 12px;
+}
+
 #topThreeTracks{
     color: white;
+    list-style: square;
+    margin: 10px 45px;
+    padding: 0px;
 }
 
 a {

@@ -94,10 +94,7 @@ document.getElementById('search-form').addEventListener('submit', function (e) {
         //getting first 3
         console.log("TRAX: " + songsJSON['tracks']['items'][0]['name']);
         if(songsJSON['tracks']['items'].length > 0){
-            // var topThreeTracks = document.createElement('ul');
-            // topThreeTracks.setAttribute('id','topThreeTracks');
             topThreeTracks.innerHTML = "";
-
             for (var i = 0; i < 3; i++){
                 track = songsJSON['tracks']['items'][i]['name'];
                 artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
@@ -109,6 +106,7 @@ document.getElementById('search-form').addEventListener('submit', function (e) {
 
                 const song = document.createElement('li');
                 song.setAttribute('id',trackID);
+                song.setAttribute('class','top3');
                 song.innerHTML = track + " - " + artist;
                 song.onclick = function() { trackSelected(this.id) };
                 topThreeTracks.append(song);
