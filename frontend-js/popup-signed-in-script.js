@@ -119,11 +119,11 @@ document.getElementById('search-form').addEventListener('submit', function (e) {
         else {
             const noSongMessage = document.createElement('p');
             noSongMessage.setAttribute('class','noSongMessage');
-            noSongsMessageList = ['Nothing here, search again!',
+            noSongsMessageList = ['nothing here, search again!',
                                   'OHNO! search again?',
-                                  'Nothing here, try again!',
+                                  'nothing here, try again!',
                                   'mmMm, let\'s search again!',
-                                  'Oops! Try again maybe!'];
+                                  'oops! Try again maybe!'];
             noSongMessage.innerHTML = noSongsMessageList[Math.floor(Math.random() * noSongsMessageList.length)];
             topThreeTracks.append(noSongMessage);
             
