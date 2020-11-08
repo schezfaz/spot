@@ -198,7 +198,7 @@ function highlightedTextActions(highlightedText){
         searchSongSpotify(highlightedText);
     }
     chrome.storage.sync.set({'highlighted_text': ""},function(){
-        console.log("something");
+        console.log("reset highlighlighted_text value");
      });
 }
 
