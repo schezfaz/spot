@@ -123,7 +123,7 @@ document.getElementById('search-form').addEventListener('submit', function (e) {
                                   'OHNO! search again?',
                                   'nothing here, try again!',
                                   'mmMm, let\'s search again!',
-                                  'oops! Try again maybe!'];
+                                  'oops! try again maybe!'];
             noSongMessage.innerHTML = noSongsMessageList[Math.floor(Math.random() * noSongsMessageList.length)];
             topThreeTracks.append(noSongMessage);
             
@@ -139,7 +139,84 @@ document.getElementById('search-form').addEventListener('submit', function (e) {
 
 function trackSelected(trackID){
     var trackElement = document.getElementById(trackID);
-    trackSearch.value = ((trackElement.innerHTML.length > 16) ? trackElement.innerHTML.substring(0,13)  + "..." : trackElement.innerHTML);
+    trackSearch.value = trackElement.innerHTML;
     selectedSongID = trackID;
     console.log("Selected Song ID: " + selectedSongID);
 }
+
+
+chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+    /*re-initialising access_token as when 2 requests are made for the same url, 
+    it cannot fetch access_token value due to the async nature of javascript*/
+    ACCESS_TOKEN = ACCESS_TOKEN; 
+    let url = tabs[0].url;
+    console.log("Current URL: " + url);
+    if(url.includes("https://www.youtube.com/watch?")){
+        // console.log("raw TITLE: " +tabs[0].title);
+        title = tabs[0].title;
+        title = title.toLowerCase();
+        //cleaning the title of the video
+        removeWords = ['youtube', ' - youtube','|','+','&','video', 'studio','music video','music','Official Video - YouTube','Official Video','(official video)',
+                'Official Video w// Lyrics','24 hour version', '(Official Audio) - YouTube', 'w/', '(explicit)',
+                ' | official music video','official music video', 'audio','-audio', ' - audio ',
+                'featuring', 'official music video','(official music video)', '(acoustic cover)','starring -','- starring',
+                '- cover','cover - ', '(official)',  ' - ', ' -', '- ',
+                'official', 'music video', 'official video', 'original video','(audio)','audio only', 'lyrics video',
+                '- lyrics',  'lyrics', '(lyrics)','(official lyric video)','lyric','ft. ' ,'cover', 'original cover','  ','   '];
+        
+        for(var i =0; i<removeWords.length;i++){
+            title = title.replaceAll(removeWords[i].toLowerCase()," ");
+        }
+
+        title = title.trim().replace(/\(\d+\)/g, "");
+        title = title.replaceAll('(','').replaceAll(')','').replaceAll('[','').replaceAll(']','').replaceAll('"','');
+        title = title.replaceAll('( )','').replaceAll('[ ]','').replaceAll('()',"").replaceAll('[]','').replaceAll('[  ]','');
+        title = title.trim();
+        // console.log("cleaned title= " +  title);
+        trackSearch.value = title;
+
+        if(title != undefined){
+            fetch("https://api.spotify.com/v1/search?q=" + encodeURI(title) + "&type=track",
+            {headers: {'Authorization': 'Bearer ' + ACCESS_TOKEN}})
+            .then(response => response.json()) //display only top 3 results
+            .then(songsJSON => {
+                topThreeTracks.innerHTML = "";
+                //getting first 3
+                try{
+                    if(songsJSON['tracks']['items'].length > 0){
+                        playlists.style.display = "block";
+                        playlistViewHeader.style.display = "block";
+                        addButton.style.display ="block";
+                        document.getElementById("searchBox").style.marginTop = "0px";
+                        for (var i = 0; i < 3; i++){
+                            track = songsJSON['tracks']['items'][i]['name'];
+                            artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
+                            trackID = songsJSON['tracks']['items'][i]['id'];
+                            const song = document.createElement('li');
+                            song.setAttribute('id',trackID);
+                            song.setAttribute('class','top3');
+                            song.innerHTML = track + " - " + artist;
+                            song.onclick = function() {trackSelected(this.id)};
+                            topThreeTracks.append(song);
+                        }
+                    }
+                    else {
+                        const youtubeSongMessage = document.createElement('p');
+                        youtubeSongMessage.setAttribute('class','noSongMessage');
+                        youtubeSongMessage.innerHTML = 'no results,modify the title and try!';
+                        youtubeSongMessage.style.fontSize = '12px';
+                        topThreeTracks.append(youtubeSongMessage);
+                        }
+                }
+                catch(err){
+                    const needToClick = document.createElement('p');
+                    needToClick.setAttribute('class','noSongMessage');
+                    needToClick.innerHTML = 'click to search!';
+                    needToClick.style.fontSize = '15px';
+                    needToClick.style.marginLeft='38px';
+                    topThreeTracks.append(needToClick);
+                }
+            }); 
+        }
+    }
+});
