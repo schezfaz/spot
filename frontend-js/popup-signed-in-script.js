@@ -6,6 +6,7 @@ var playlistViewHeader = document.getElementById("playlist-view-header");
 var addButton = document.getElementById("ADD");
 
 var selectedSongID ='';
+var top3songs = [];
 var ACCESS_TOKEN='';
 
 function getToken(){
@@ -98,6 +99,7 @@ document.getElementById('search-form').addEventListener('submit', function (e) {
     .then(response => response.json()) //display only top 3 results
     .then(songsJSON => {
         topThreeTracks.innerHTML = "";
+        top3songs.length = 0; 
         //getting first 3
         if(songsJSON['tracks']['items'].length > 0){
             playlists.style.display = "block";
@@ -108,6 +110,7 @@ document.getElementById('search-form').addEventListener('submit', function (e) {
                 track = songsJSON['tracks']['items'][i]['name'];
                 artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
                 trackID = songsJSON['tracks']['items'][i]['id'];
+                top3songs.push(trackID);
                 const song = document.createElement('li');
                 song.setAttribute('id',trackID);
                 song.setAttribute('class','top3');
@@ -142,6 +145,13 @@ function trackSelected(trackID){
     trackSearch.value = trackElement.innerHTML;
     selectedSongID = trackID;
     console.log("Selected Song ID: " + selectedSongID);
+    for(var i = 0; i<3;i++){
+        var song = document.getElementById(top3songs[i]);
+        song.style.color = 'white';
+        if(trackID == top3songs[i]){
+            trackElement.style.color = '#1DB954';
+        }
+    }
 }
 
 
