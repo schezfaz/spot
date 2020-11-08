@@ -15,8 +15,6 @@ let ACCESS_TOKEN = '';
 
 let user_signed_in = false;
 
-let display_name = '';
-
 function create_spotify_end_point() {
     STATE = encodeURIComponent('meet' + Math.random().toString(36).substring(2, 15));
 
@@ -29,58 +27,60 @@ function create_spotify_end_point() {
 
 // This function queries the currently open tab. 
 // If the open URL is youtube, it fetches the title of the video
-function queryTab() {
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
-        let url = tabs[0].url;
-        console.log("URL is -->" + url);
-    });
-}
+// function queryTab() {
+//     chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+//         let url = tabs[0].url;
+//         console.log("URL is -->" + url);
+//     });
+// }
 
 // This function updates the popup if the user is already signed in
-function updatePopup() {
-    chrome.browserAction.setPopup({ popup: './popup-signed-in.html' }, () => {
-        //queryTab();
-        sendResponse({ message: 'success' });
-    });
-}
+// function updatePopup() {
+//     chrome.browserAction.setPopup({ popup: './popup-signed-in.html' }, () => {
+//         //queryTab();
+//         sendResponse({ message: 'success' });
+//     });
+// }
 
+
+// currentTab = '';
+// chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+//     let url = tabs[0].url;
+//     currentTab = url;
+//     console.log("Current URL: " + url);
+// });
 
 // This function may get executed multiple times for the same website. Careful what we write here
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    console.log("Querying tab");
-    queryTab();
+// chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+//     chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+//         const url = tabs[0].url;
+//         console.log("URL is -->" + url);
+//     });
 
-    //TODO Remove this and place it somewhere it's accessed a little less often
-    chrome.storage.sync.get(["signed_in"], function (items) {
-        //  items = [ { "signed_in": true } ]
-        if (items != null && items[0] != null) {
-            if (items[0]["signed_in"]) {
-                user_signed_in = true;
-                updatePopup();
-            }
-        }
-    });
+// });
+    // console.log("Querying tab");
+    // queryTab();
 
-    chrome.storage.sync.get(["access_token"], function (items) {
-        //  items = [ { "signed_in": true } ]
-        if (items != null && items[0] != null) {
-            if (items[0]["access_token"]!=null) {
-                ACCESS_TOKEN = items[0]["access_token"];
-            }
-        }
-    });
+    // //TODO Remove this and place it somewhere it's accessed a little less often
+    // chrome.storage.sync.get(["signed_in"], function (items) {
+    //     //  items = [ { "signed_in": true } ]
+    //     if (items != null && items[0] != null) {
+    //         if (items[0]["signed_in"]) {
+    //             user_signed_in = true;
+    //             updatePopup();
+    //         }
+    //     }
+    // });
 
-});
+    // chrome.storage.sync.get(["access_token"], function (items) {
+    //     //  items = [ { "signed_in": true } ]
+    //     if (items != null && items[0] != null) {
+    //         if (items[0]["access_token"]!=null) {
+    //             ACCESS_TOKEN = items[0]["access_token"];
+    //         }
+    //     }
+    // });
 
-// Utility function for formatting query params
-function formatParams(params) {
-    return "?" + Object
-        .keys(params)
-        .map(function (key) {
-            return key + "=" + encodeURIComponent(params[key])
-        })
-        .join("&")
-}
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message === 'login') {
