@@ -10,9 +10,8 @@
     },
 
     "background": {
-        "scripts": [
-            "./background.js"
-        ]
+        "scripts": ["./background.js"], 
+        "persistent": true
     },
 
     "browser_action": {
@@ -23,6 +22,8 @@
         "storage",
         "identity",
         "tabs",
+        "notifications",
+        "contextMenus",
         "https://api.spotify.com/"
     ]
 }

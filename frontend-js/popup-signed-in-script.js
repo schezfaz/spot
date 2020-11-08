@@ -7,6 +7,7 @@ var addButton = document.getElementById("ADD");
 
 var selectedSongID ='';
 var top3songs = [];
+var highlightedText = '';
 var ACCESS_TOKEN='';
 
 function getToken(){
@@ -35,7 +36,7 @@ function  getUserName(ACCESS_TOKEN){
 }
 
 function searchSongSpotify(query){
-    fetch("https://api.spotify.com/v1/search?q=" + encodeURI(document.getElementById('query').value) + "&type=track",
+    fetch("https://api.spotify.com/v1/search?q=" + encodeURI(query) + "&type=track",
         {headers: {'Authorization': 'Bearer ' + ACCESS_TOKEN}})
     .then(response => response.json()) //display only top 3 results
     .then(songsJSON => {
@@ -61,17 +62,11 @@ function searchSongSpotify(query){
             else {
                 const noSongMessage = document.createElement('p');
                 noSongMessage.setAttribute('class','noSongMessage');
-                noSongsMessageList = ['nothing here, search again!',
-                                    'OHNO! search again?',
-                                    'nothing here, try again!',
-                                    'mmMm, let\'s search again!',
-                                    'oops! try again maybe!'];
                 noSongMessage.innerHTML= "no results,modify search and try again!";
-                // noSongMessage.innerHTML = noSongsMessageList[Math.floor(Math.random() * noSongsMessageList.length)];
+                noSongMessage.style.fontSize = '12px';
                 topThreeTracks.append(noSongMessage);
             }
         } catch(err){
-            console.log("EEERRR:R  " + err);
             const needToClick = document.createElement('p');
             needToClick.setAttribute('class','noSongMessage');
             needToClick.innerHTML = 'click to search!';
@@ -191,3 +186,21 @@ chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
         }
     }
 });
+
+chrome.storage.sync.get('highlighted_text', result => {
+    highlightedText = result['highlighted_text'];
+    highlightedTextActions(highlightedText);
+});
+
+function highlightedTextActions(highlightedText){
+    trackSearch.value = highlightedText;
+    if(highlightedText!=='' && highlightedText!==null && highlightedText.length > 0){
+        searchSongSpotify(highlightedText);
+    }
+    chrome.storage.sync.set({'highlighted_text': ""},function(){
+        console.log("something");
+     });
+}
+
+
+    
