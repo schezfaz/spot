@@ -31,7 +31,7 @@ chrome.contextMenus.onClicked.addListener(function(highlighted){
                 type: 'basic',
                 iconUrl: 'images/spot-48.png',
                 title: 'SPOTTED!',
-                message: 'Search results for "'+ highlighted.selectionText +'" text are ready. Open the SPOT extention to add the best match to your Spotify playlists!'
+                message: 'Search results for "'+ highlighted.selectionText +'" are ready. Open the SPOT extention to add the best match to your Spotify playlists!'
             };
             chrome.notifications.create('SpottedNotif',textSpottedNotif);
         })
