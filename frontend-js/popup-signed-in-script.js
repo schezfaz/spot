@@ -162,7 +162,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
         title = tabs[0].title;
         title = title.toLowerCase();
         //cleaning the title of the video
-        removeWords = ['youtube', ' - youtube','|','+','&','video', 'studio','music video','music','Official Video - YouTube','Official Video','(official video)',
+        removeWords = ['youtube', ' - youtube','|','+','&','video', 'featuring', 'feat.',
+                'studio','music video','music','Official Video - YouTube','Official Video','(official video)',
                 'Official Video w// Lyrics','24 hour version', '(Official Audio) - YouTube', 'w/', '(explicit)',
                 ' | official music video','official music video', 'audio','-audio', ' - audio ',
                 'featuring', 'official music video','(official music video)', '(acoustic cover)','starring -','- starring',
