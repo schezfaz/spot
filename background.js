@@ -15,6 +15,29 @@ let ACCESS_TOKEN = '';
 
 let user_signed_in = false;
 
+var highlightedTextContextMenu = {
+    "id": "highlightedText",
+    "title": "SPOTTED! Search on Spotify?",
+    "contexts":["selection"]
+}
+
+chrome.contextMenus.create(highlightedTextContextMenu);
+
+chrome.contextMenus.onClicked.addListener(function(highlighted){
+    if(highlighted.menuItemId  == "highlightedText" && highlighted.selectionText){
+        console.log("highlighted: "+ highlighted.selectionText);
+        chrome.storage.sync.set({'highlighted_text': highlighted.selectionText},function(){
+            var textSpottedNotif = {
+                type: 'basic',
+                iconUrl: 'images/spot-48.png',
+                title: 'SPOTTED!',
+                message: 'Search results for "'+ highlighted.selectionText +'" are ready. Open the SPOT extention to add the best match to your Spotify playlists!'
+            };
+            chrome.notifications.create('SpottedNotif',textSpottedNotif);
+        })
+    }
+});
+
 function create_spotify_end_point() {
     STATE = encodeURIComponent('meet' + Math.random().toString(36).substring(2, 15));
 
@@ -23,64 +46,6 @@ function create_spotify_end_point() {
     console.log(oauth2_url);
     return oauth2_url;
 }
-
-
-// This function queries the currently open tab. 
-// If the open URL is youtube, it fetches the title of the video
-// function queryTab() {
-//     chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
-//         let url = tabs[0].url;
-//         console.log("URL is -->" + url);
-//     });
-// }
-
-// This function updates the popup if the user is already signed in
-// function updatePopup() {
-//     chrome.browserAction.setPopup({ popup: './popup-signed-in.html' }, () => {
-//         //queryTab();
-//         sendResponse({ message: 'success' });
-//     });
-// }
-
-
-// currentTab = '';
-// chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-//     let url = tabs[0].url;
-//     currentTab = url;
-//     console.log("Current URL: " + url);
-// });
-
-// This function may get executed multiple times for the same website. Careful what we write here
-// chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-//     chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
-//         const url = tabs[0].url;
-//         console.log("URL is -->" + url);
-//     });
-
-// });
-    // console.log("Querying tab");
-    // queryTab();
-
-    // //TODO Remove this and place it somewhere it's accessed a little less often
-    // chrome.storage.sync.get(["signed_in"], function (items) {
-    //     //  items = [ { "signed_in": true } ]
-    //     if (items != null && items[0] != null) {
-    //         if (items[0]["signed_in"]) {
-    //             user_signed_in = true;
-    //             updatePopup();
-    //         }
-    //     }
-    // });
-
-    // chrome.storage.sync.get(["access_token"], function (items) {
-    //     //  items = [ { "signed_in": true } ]
-    //     if (items != null && items[0] != null) {
-    //         if (items[0]["access_token"]!=null) {
-    //             ACCESS_TOKEN = items[0]["access_token"];
-    //         }
-    //     }
-    // });
-
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message === 'login') {
@@ -119,11 +84,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                                 console.log("Access token saved.");
                             });
 
-
-                            // setTimeout(()=>{
-                            //     ACCESS_TOKEN = '';
-                            //     user_signed_in = false;
-                            // }, 3600000); //every 60 minutes sign the user out
+                            setTimeout(()=>{
+                                ACCESS_TOKEN = '';
+                                user_signed_in = false;
+                            }, 3600000); //every 60 minutes sign the user out
 
                             chrome.browserAction.setPopup({ popup: './popup-signed-in.html' }, () => {
                                 sendResponse({ message: 'success' });

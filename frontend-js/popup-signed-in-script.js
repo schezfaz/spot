@@ -1,13 +1,14 @@
-var topThreeTracks = document.getElementById('topThreeTracks');
-var trackSearch = document.getElementById('query');
-var displayName = document.getElementById('displayName');
-var playlists = document.getElementById("playlists");
-var playlistViewHeader = document.getElementById("playlist-view-header");
-var addButton = document.getElementById("ADD");
+let topThreeTracks = document.getElementById('topThreeTracks');
+let trackSearch = document.getElementById('query');
+let displayName = document.getElementById('displayName');
+let playlists = document.getElementById("playlists");
+let playlistViewHeader = document.getElementById("playlist-view-header");
+let addButton = document.getElementById("ADD");
 
-var selectedSongID ='';
-var top3songs = [];
-var ACCESS_TOKEN='';
+let selectedSongID ='';
+let top3songs = [];
+let highlightedText = '';
+let ACCESS_TOKEN='';
 
 function getToken(){
     chrome.storage.sync.get('access_token', result => {
@@ -17,11 +18,9 @@ function getToken(){
             getUserName(ACCESS_TOKEN);
         }
     });
-    // chrome.storage.sync.get(null, function(items) {
-    //     var allKeys = Object.keys(items);
-    //     console.log(allKeys);
-    // });
 }
+
+getToken();
 
 function  getUserName(ACCESS_TOKEN){
     fetch('https://api.spotify.com/v1/me', 
@@ -34,8 +33,35 @@ function  getUserName(ACCESS_TOKEN){
     });
 }
 
+chrome.storage.sync.get('highlighted_text', result => {
+    highlightedText = result['highlighted_text'];
+    console.log("highlighted text: " + highlightedText);
+    if(highlightedText!=='' && highlightedText!==null && highlightedText.length > 0){
+        highlightedTextActions(highlightedText);
+    }
+});
+
+function highlightedTextActions(highlightedText){
+    trackSearch.value = highlightedText;
+    searchSongSpotify(highlightedText);
+    
+    chrome.storage.sync.set({'highlighted_text': ""},function(){
+        console.log("reset highlighlighted_text value");
+     });
+}
+
 function searchSongSpotify(query){
-    fetch("https://api.spotify.com/v1/search?q=" + encodeURI(document.getElementById('query').value) + "&type=track",
+    trackSearch.value = query;
+    console.log("Searching for: " + query + "!");
+    if(ACCESS_TOKEN==undefined || ACCESS_TOKEN=='' || ACCESS_TOKEN==null || ACCESS_TOKEN==' '){
+        console.log('first if');
+        chrome.storage.sync.get('access_token', result => {
+            ACCESS_TOKEN  = result['access_token'];
+        });
+    }
+    
+    // if(ACCESS_TOKEN!=undefined && ACCESS_TOKEN!='' && ACCESS_TOKEN!=null && ACCESS_TOKEN!=' '){      
+    fetch("https://api.spotify.com/v1/search?q=" + encodeURI(query) + "&type=track",
         {headers: {'Authorization': 'Bearer ' + ACCESS_TOKEN}})
     .then(response => response.json()) //display only top 3 results
     .then(songsJSON => {
@@ -43,35 +69,39 @@ function searchSongSpotify(query){
         top3songs.length = 0; 
         //getting first 3
         try{
-            if(songsJSON['tracks']['items'].length > 0){
-                document.getElementById("searchBox").style.marginTop = "0px";
-                for (var i = 0; i < 3; i++){
-                    track = songsJSON['tracks']['items'][i]['name'];
-                    artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
-                    trackID = songsJSON['tracks']['items'][i]['id'];
-                    top3songs.push(trackID);
-                    const song = document.createElement('li');
-                    song.setAttribute('id',trackID);
-                    song.setAttribute('class','top3');
-                    song.innerHTML = track + " - " + artist;
-                    song.onclick = function() {trackSelected(this.id)};
-                    topThreeTracks.append(song);
+            if(songsJSON['tracks']!=undefined){
+                if(songsJSON['tracks']['items'].length > 0){
+                    document.getElementById("searchBox").style.marginTop = "0px";
+                    for (let i = 0; i < 3; i++){
+                        if(songsJSON['tracks']['items'][i]!=undefined){
+                            track = songsJSON['tracks']['items'][i]['name'];
+                            artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
+                            trackID = songsJSON['tracks']['items'][i]['id'];
+                            top3songs.push(trackID);
+                            const song = document.createElement('li');
+                            song.setAttribute('id',trackID);
+                            song.setAttribute('class','top3');
+                            song.innerHTML = track + " - " + artist;
+                            song.onclick = function() {trackSelected(this.id)};
+                            topThreeTracks.append(song);
+                        }
+                    }
                 }
-            }
-            else {
-                const noSongMessage = document.createElement('p');
-                noSongMessage.setAttribute('class','noSongMessage');
-                noSongsMessageList = ['nothing here, search again!',
-                                    'OHNO! search again?',
-                                    'nothing here, try again!',
-                                    'mmMm, let\'s search again!',
-                                    'oops! try again maybe!'];
-                noSongMessage.innerHTML= "no results,modify search and try again!";
-                // noSongMessage.innerHTML = noSongsMessageList[Math.floor(Math.random() * noSongsMessageList.length)];
-                topThreeTracks.append(noSongMessage);
+                else {
+                    trackSearch.value = query;
+                    const noSongMessage = document.createElement('p');
+                    noSongMessage.setAttribute('class','noSongMessage');
+                    noSongMessage.innerHTML= "no results,modify search and try again!";
+                    noSongMessage.style.fontSize = '12px';
+                    topThreeTracks.append(noSongMessage);
+                }
+            }else{
+                console.log("400 Status Error, Calling function again!");
+                searchSongSpotify(query);
             }
         } catch(err){
-            console.log("EEERRR:R  " + err);
+            trackSearch.value = query;
+            console.log("Caught error while searching: " + err);
             const needToClick = document.createElement('p');
             needToClick.setAttribute('class','noSongMessage');
             needToClick.innerHTML = 'click to search!';
@@ -81,6 +111,8 @@ function searchSongSpotify(query){
         }
     });
 }
+
+
 
 /*in one call, maximum number of playlists items returned is 50. If .length == 50, 
 make another call using offset to get the next 50 items, as no. of playlists can be > 50*/
@@ -127,17 +159,11 @@ function selectPlaylist(ACCESS_TOKEN, playlist_id){
     console.log("Playlist Selected: "  + playlist_id);
 }
 
-getToken();
-
-document.querySelector('#sign-out').addEventListener('click', function () {
-    chrome.runtime.sendMessage({ message: 'logout' }, function (response) {
-        if (response.message === 'success') window.close();
-    });
-});
 
 document.getElementById('search-form').addEventListener('submit', function (e) {
     e.preventDefault();
     console.log("Searching for songs... " + trackSearch.value);
+    trackSearch.value = trackSearch.value;
     searchSongSpotify(trackSearch.value);
 }, false);
 
@@ -146,7 +172,7 @@ function trackSelected(trackID){
     trackSearch.value = trackElement.innerHTML;
     selectedSongID = trackID;
     console.log("Selected Song ID: " + selectedSongID);
-    for(var i = 0; i<3;i++){
+    for(let i = 0; i<top3songs.length ;i++){
         var song = document.getElementById(top3songs[i]);
         song.style.color = 'white';
         if(trackID == top3songs[i]){
@@ -155,7 +181,7 @@ function trackSelected(trackID){
     }
 }
 
-
+/*if tab open is youtube.com/watch: fetch title i.e. name of video being watched */
 chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
     /*re-initialising access_token as when 2 requests are made for the same url, 
     it cannot fetch access_token value due to the async nature of javascript*/
@@ -163,11 +189,11 @@ chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
     let url = tabs[0].url;
     console.log("Current URL: " + url);
     if(url.includes("https://www.youtube.com/watch?")){
-        // console.log("raw TITLE: " +tabs[0].title);
         title = tabs[0].title;
         title = title.toLowerCase();
         //cleaning the title of the video
-        removeWords = ['youtube', ' - youtube','|','+','&','video', 'studio','music video','music','Official Video - YouTube','Official Video','(official video)',
+        removeWords = ['youtube', ' - youtube','|','+','&','video', 'featuring', 'feat.',  'Watch Now', '!', 'by',
+                'studio','music video','music','Official Video - YouTube','Official Video','(official video)',
                 'Official Video w// Lyrics','24 hour version', '(Official Audio) - YouTube', 'w/', '(explicit)',
                 ' | official music video','official music video', 'audio','-audio', ' - audio ',
                 'featuring', 'official music video','(official music video)', '(acoustic cover)','starring -','- starring',
@@ -175,7 +201,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
                 'official', 'music video', 'official video', 'original video','(audio)','audio only', 'lyrics video',
                 '- lyrics',  'lyrics', '(lyrics)','(official lyric video)','lyric','ft. ' ,'cover', 'original cover','  ','   '];
         
-        for(var i =0; i<removeWords.length;i++){
+        for(let i =0; i<removeWords.length;i++){
             title = title.replaceAll(removeWords[i].toLowerCase()," ");
         }
 
@@ -183,11 +209,20 @@ chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
         title = title.replaceAll('(','').replaceAll(')','').replaceAll('[','').replaceAll(']','').replaceAll('"','');
         title = title.replaceAll('( )','').replaceAll('[ ]','').replaceAll('()',"").replaceAll('[]','').replaceAll('[  ]','');
         title = title.trim();
-        // console.log("cleaned title= " +  title);
-        trackSearch.value = title;
 
-        if(title != undefined){
+        if(title != undefined || title != "" || title != null){
             searchSongSpotify(title); 
         }
     }
 });
+
+
+
+document.querySelector('#sign-out').addEventListener('click', function () {
+    chrome.runtime.sendMessage({ message: 'logout' }, function (response) {
+        if (response.message === 'success') window.close();
+    });
+});
+
+
+    
