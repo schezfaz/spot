@@ -84,10 +84,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                                 console.log("Access token saved.");
                             });
 
-                            // setTimeout(()=>{
-                            //     ACCESS_TOKEN = '';
-                            //     user_signed_in = false;
-                            // }, 3600000); //every 60 minutes sign the user out
+                            setTimeout(()=>{
+                                ACCESS_TOKEN = '';
+                                user_signed_in = false;
+                            }, 3600000); //every 60 minutes sign the user out
 
                             chrome.browserAction.setPopup({ popup: './popup-signed-in.html' }, () => {
                                 sendResponse({ message: 'success' });
