@@ -6,6 +6,7 @@ let playlistViewHeader = document.getElementById("playlist-view-header");
 let addButton = document.getElementById("ADD");
 
 var selectedSongID ='';
+var owned_playlists = [];
 let top3songs = [];
 let highlightedText = '';
 let ACCESS_TOKEN='';
@@ -67,54 +68,61 @@ function searchSongSpotify(query){
         });
     }
 
-    fetch("https://api.spotify.com/v1/search?q=" + encodeURI(query) + "&type=track",
-        {headers: {'Authorization': 'Bearer ' + ACCESS_TOKEN}})
-    .then(response => response.json()) //display only top 3 results
-    .then(songsJSON => {
-        topThreeTracks.innerHTML = "";
-        top3songs.length = 0; 
-        try{
-            if(songsJSON['tracks']!=undefined){
-                if(songsJSON['tracks']['items'].length > 0){
-                    document.getElementById("searchBox").style.marginTop = "0px";
-                    for (let i = 0; i < 3; i++){
-                        if(songsJSON['tracks']['items'][i]!=undefined){
-                            track = songsJSON['tracks']['items'][i]['name'];
-                            artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
-                            trackID = songsJSON['tracks']['items'][i]['id'];
-                            if(i==0){selectedSongID = trackID;} //setting first result as selectedsong by default
-                            top3songs.push(trackID);
-                            const song = document.createElement('li');
-                            song.setAttribute('id',trackID);
-                            song.setAttribute('class','top3');
-                            song.innerHTML = track + " - " + artist;
-                            song.onclick = function() {trackSelected(this.id)};
-                            topThreeTracks.append(song);
+    if(query!=null && query!=' '&& query.trim().length>0 && query!=undefined){
+        fetch("https://api.spotify.com/v1/search?q=" + encodeURI(query) + "&type=track",
+            {headers: {'Authorization': 'Bearer ' + ACCESS_TOKEN}})
+        .then(response => response.json()) //display only top 3 results
+        .then(songsJSON => {
+            topThreeTracks.innerHTML = "";
+            top3songs.length = 0; 
+            try{
+                if(songsJSON['tracks']!=undefined){
+                    if(songsJSON['tracks']['items'].length > 0){
+                        document.getElementById("searchBox").style.marginTop = "0px";
+                        for (let i = 0; i < 3; i++){
+                            if(songsJSON['tracks']['items'][i]!=undefined){
+                                track = songsJSON['tracks']['items'][i]['name'];
+                                artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
+                                trackID = songsJSON['tracks']['items'][i]['id'];
+                                if(i==0){selectedSongID = trackID;} //setting first result as selectedsong by default
+                                top3songs.push(trackID);
+                                const song = document.createElement('li');
+                                song.setAttribute('id',trackID);
+                                song.setAttribute('class','top3');
+                                song.innerHTML = track + " - " + artist;
+                                song.onclick = function() {trackSelected(this.id)};
+                                topThreeTracks.append(song);
+                                playlistViewHeader.innerHTML = "select one or more playlists to add to:";
+                            }
                         }
+                    }else {
+                        trackSearch.value = query;
+                        const noSongMessage = document.createElement('p');
+                        noSongMessage.setAttribute('class','noSongMessage');
+                        noSongMessage.innerHTML= "no results,modify search and try again!";
+                        noSongMessage.style.fontSize = '12px';
+                        topThreeTracks.append(noSongMessage);
+                        playlistViewHeader.innerHTML = "playlists:";
                     }
-                }else {
-                    trackSearch.value = query;
-                    const noSongMessage = document.createElement('p');
-                    noSongMessage.setAttribute('class','noSongMessage');
-                    noSongMessage.innerHTML= "no results,modify search and try again!";
-                    noSongMessage.style.fontSize = '12px';
-                    topThreeTracks.append(noSongMessage);
+                }else{
+                    console.log("400 Status Error, Calling function again!");
+                    searchSongSpotify(query);
                 }
-            }else{
-                console.log("400 Status Error, Calling function again!");
-                searchSongSpotify(query);
+            } catch(err){
+                trackSearch.value = query;
+                console.log("Caught error :" + err + " while searching for: " + query);
+                const needToClick = document.createElement('p');
+                needToClick.setAttribute('class','noSongMessage');
+                needToClick.innerHTML = 'click to search!';
+                needToClick.style.fontSize = '15px';
+                needToClick.style.marginLeft='38px';
+                topThreeTracks.append(needToClick);
             }
-        } catch(err){
-            trackSearch.value = query;
-            console.log("Caught error :" + err + " while searching for: " + query);
-            const needToClick = document.createElement('p');
-            needToClick.setAttribute('class','noSongMessage');
-            needToClick.innerHTML = 'click to search!';
-            needToClick.style.fontSize = '15px';
-            needToClick.style.marginLeft='38px';
-            topThreeTracks.append(needToClick);
-        }
-    });
+        });
+    }else{
+        playlistViewHeader.innerHTML = "playlists:";
+        topThreeTracks.innerHTML = '';
+    }
 }
 
 
@@ -125,7 +133,6 @@ make another call using offset to get the next 50 items, as no. of playlists can
 /*Get all playlists where user is the creater or where playlist collaborative value is true*/
 /* currently collaboarative playlists are not being fetched inspite of scope containing the required parameters MmmMmmmM need to figure*/
 function getPlaylists(ACCESS_TOKEN, user_id){
-    var owned_playlists = [];
     document.getElementById("searchBox").style.marginTop = "0px";
     fetch('https://api.spotify.com/v1/me/playlists?limit=50',
         { headers: {'Authorization':'Bearer '+ACCESS_TOKEN}
@@ -150,13 +157,11 @@ function getPlaylists(ACCESS_TOKEN, user_id){
                 each_playlist.appendChild(playlist_name);
                 playlists.appendChild(each_playlist);
                 // playlists.innerHTML= playlists.innerHTML + playlist.name + "\n";
-                console.log(playlist.name);
-
+                // console.log(playlist.name);
                 each_playlist.onclick = () => selectPlaylist(ACCESS_TOKEN, playlist.id);
             }
         });
-        console.log(owned_playlists.length);
-        playlistViewHeader.innerHTML = "Choose from " + owned_playlists.length + " playlists!";
+        playlistViewHeader.innerHTML = "owned playlists:";
     })
 }
 

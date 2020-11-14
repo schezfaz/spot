@@ -59,10 +59,11 @@ body::-webkit-scrollbar {
 }
 
 #playlist-view-header{
-    color: white;
-    font-size: 15px;
+    color: #1DB954;
+    opacity: 0.7;
+    font-size: 13px;
     text-align: center;
-    font-family: GothamLight;
+    font-family: GothamBold;
 }
 
 #playlists{
@@ -88,7 +89,7 @@ body::-webkit-scrollbar {
 #topThreeTracks{
     color: white;
     list-style: square;
-    margin: 10px 45px;
+    margin: 10px 55px;
     padding: 0px;
 }
 
@@ -250,11 +251,10 @@ table {
 	background: transparent;
 }
 
-#addSong{
+#add-song{
     width: 200px;
     text-align: center;
     align-self: center;
     margin-left: 25%;
     height: 40px;
-    padding-top: 0px;
 }
