@@ -249,3 +249,12 @@ table {
 .btn:hover span {
 	background: transparent;
 }
+
+#addSong{
+    width: 200px;
+    text-align: center;
+    align-self: center;
+    margin-left: 25%;
+    height: 40px;
+    padding-top: 0px;
+}

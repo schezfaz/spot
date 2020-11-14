@@ -5,7 +5,7 @@ let playlists = document.getElementById("playlists");
 let playlistViewHeader = document.getElementById("playlist-view-header");
 let addButton = document.getElementById("ADD");
 
-let selectedSongID ='';
+var selectedSongID ='';
 let top3songs = [];
 let highlightedText = '';
 let ACCESS_TOKEN='';
@@ -66,15 +66,13 @@ function searchSongSpotify(query){
             ACCESS_TOKEN  = result['access_token'];
         });
     }
-    
-    // if(ACCESS_TOKEN!=undefined && ACCESS_TOKEN!='' && ACCESS_TOKEN!=null && ACCESS_TOKEN!=' '){      
+
     fetch("https://api.spotify.com/v1/search?q=" + encodeURI(query) + "&type=track",
         {headers: {'Authorization': 'Bearer ' + ACCESS_TOKEN}})
     .then(response => response.json()) //display only top 3 results
     .then(songsJSON => {
         topThreeTracks.innerHTML = "";
         top3songs.length = 0; 
-        //getting first 3
         try{
             if(songsJSON['tracks']!=undefined){
                 if(songsJSON['tracks']['items'].length > 0){
@@ -84,6 +82,7 @@ function searchSongSpotify(query){
                             track = songsJSON['tracks']['items'][i]['name'];
                             artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
                             trackID = songsJSON['tracks']['items'][i]['id'];
+                            if(i==0){selectedSongID = trackID;} //setting first result as selectedsong by default
                             top3songs.push(trackID);
                             const song = document.createElement('li');
                             song.setAttribute('id',trackID);
@@ -93,8 +92,7 @@ function searchSongSpotify(query){
                             topThreeTracks.append(song);
                         }
                     }
-                }
-                else {
+                }else {
                     trackSearch.value = query;
                     const noSongMessage = document.createElement('p');
                     noSongMessage.setAttribute('class','noSongMessage');
@@ -108,7 +106,7 @@ function searchSongSpotify(query){
             }
         } catch(err){
             trackSearch.value = query;
-            console.log("Caught error while searching: " + err);
+            console.log("Caught error :" + err + " while searching for: " + query);
             const needToClick = document.createElement('p');
             needToClick.setAttribute('class','noSongMessage');
             needToClick.innerHTML = 'click to search!';
@@ -175,12 +173,12 @@ document.getElementById('search-form').addEventListener('submit', function (e) {
 }, false);
 
 function trackSelected(trackID){
-    var trackElement = document.getElementById(trackID);
+    let trackElement = document.getElementById(trackID);
     trackSearch.value = trackElement.innerHTML;
     selectedSongID = trackID;
     console.log("Selected Song ID: " + selectedSongID);
     for(let i = 0; i<top3songs.length ;i++){
-        var song = document.getElementById(top3songs[i]);
+        let song = document.getElementById(top3songs[i]);
         song.style.color = 'white';
         if(trackID == top3songs[i]){
             trackElement.style.color = '#1DB954';
@@ -223,12 +221,14 @@ chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
     }
 });
 
-
-
 document.querySelector('#sign-out').addEventListener('click', function () {
     chrome.runtime.sendMessage({ message: 'logout' }, function (response) {
         if (response.message === 'success') window.close();
     });
+});
+
+document.querySelector('#add-song').addEventListener('click', function () {
+    console.log("Selected song value: " + selectedSongID);
 });
 
 
