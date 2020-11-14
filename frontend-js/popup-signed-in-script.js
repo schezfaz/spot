@@ -102,7 +102,7 @@ function searchSongSpotify(query){
                         noSongMessage.innerHTML= "no results,modify search and try again!";
                         noSongMessage.style.fontSize = '12px';
                         topThreeTracks.append(noSongMessage);
-                        playlistViewHeader.innerHTML = "playlists:";
+                        playlistViewHeader.innerHTML = "ownded playlists:";
                     }
                 }else{
                     console.log("400 Status Error, Calling function again!");
@@ -120,7 +120,7 @@ function searchSongSpotify(query){
             }
         });
     }else{
-        playlistViewHeader.innerHTML = "playlists:";
+        playlistViewHeader.innerHTML = "owned playlists:";
         topThreeTracks.innerHTML = '';
     }
 }
@@ -161,7 +161,6 @@ function getPlaylists(ACCESS_TOKEN, user_id){
                 each_playlist.onclick = () => selectPlaylist(ACCESS_TOKEN, playlist.id);
             }
         });
-        playlistViewHeader.innerHTML = "owned playlists:";
     })
 }
 
