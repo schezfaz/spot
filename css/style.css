@@ -67,7 +67,7 @@ body::-webkit-scrollbar {
 
 #playlists{
     color: white; 
-    height: 300px; 
+    height: 200px; 
     margin: 10px 10px 0px 10px;
     border: 1px solid #1DB954;
     overflow-y: scroll;
