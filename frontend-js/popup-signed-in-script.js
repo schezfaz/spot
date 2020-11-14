@@ -27,9 +27,16 @@ function  getUserName(ACCESS_TOKEN){
         { headers: {'Authorization':'Bearer '+ ACCESS_TOKEN}
     }).then(response => response.json())
     .then(data => {
-        displayName.innerHTML = data.display_name;
-        getPlaylists(ACCESS_TOKEN, data.id);
-        return data.display_name;
+        if(data.display_name==undefined){
+            chrome.runtime.sendMessage({ message: 'logout' }, function (response) {
+                if (response.message === 'success') window.close();
+            });
+        }
+        else{
+            displayName.innerHTML = data.display_name;
+            getPlaylists(ACCESS_TOKEN, data.id);
+            return data.display_name;
+        }
     });
 }
 
