@@ -67,15 +67,41 @@ body::-webkit-scrollbar {
 }
 
 #playlists{
-    color: white; 
+    border: 1px groove rgba(29,185,84,0.8);
     height: 200px; 
     margin: 10px 10px 0px 10px;
-    border: 1px solid #1DB954;
     overflow-y: scroll;
 }
 
 #playlists::-webkit-scrollbar {
     display: none;
+}
+
+#playlist-scroll{
+    color: white; 
+    margin-top: 30px;
+    height: 160px; 
+    overflow-y: scroll;
+}
+
+#playlist-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.singlePlaylist{
+    margin: 3px;
+    padding: 0px;
+    width: 25%;
+}
+
+.playlist-cover{
+    margin: 2px;
+}
+
+.playlist-name{
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
 }
 
 #results{
@@ -145,6 +171,20 @@ table {
     position: relative;
     margin-top: 30%;
     font-size: 20px;
+}
+
+.searchPlaylist{
+    border: none;
+    border-bottom: inherit;
+    border-bottom-color: #1DB954;
+    font-family: GothamLight;
+    font-size: 13px;
+    background: black;
+    outline:none;
+    text-align: center;
+    color: #FFF;
+    margin: 5px 25%;
+    position: fixed;
 }
 
 
