@@ -127,7 +127,7 @@ function searchSongSpotify(query){
 
 /*function to get append liked playlist to the list of displayed playlists*/
 function likedSongsDisplay(){
-    let likedSongsID = 'liked-songs-list';
+    let likedSongsID = 'liked-songs';
     owned_playlists.push('Liked Songs');
     var each_playlist = document.createElement("div");
     var playlist_cover = document.createElement("img");
