@@ -125,7 +125,24 @@ function searchSongSpotify(query){
     }
 }
 
+/*function to get append liked playlist to the list of displayed playlists*/
+function likedSongsDisplay(){
+    let likedSongsID = 'liked-songs';
+    owned_playlists.push('Liked Songs');
+    var each_playlist = document.createElement("div");
+    var playlist_cover = document.createElement("img");
+    playlist_cover.src = './../images/liked_songs.png';;
+    playlist_cover.width = "100";
+    playlist_cover.height ="100";
+    var playlist_name = document.createElement("p");
+    playlist_name.appendChild(document.createTextNode('Liked Songs'));
+    // playlist_name.innerHTML = playlist_name;
+    each_playlist.appendChild(playlist_cover);
+    each_playlist.appendChild(playlist_name);
+    playlists.appendChild(each_playlist);
+    each_playlist.onclick = () => selectPlaylist(ACCESS_TOKEN, likedSongsID);
 
+}
 
 /*in one call, maximum number of playlists items returned is 50. If .length == 50, 
 make another call using offset to get the next 50 items, as no. of playlists can be > 50*/
@@ -139,6 +156,7 @@ function getPlaylists(ACCESS_TOKEN, user_id){
     .then(data => {
         console.log("No. of Playlists" + Object.keys(data.items).length);
         console.log("User ID: " + user_id);
+        likedSongsDisplay();
         data.items.forEach(playlist => {
             if(playlist.owner.id == user_id){ //this will be the final list of playlists displayed as user can add songs to only these playlists
                 owned_playlists.push(playlist.name);
