@@ -1,8 +1,9 @@
 let topThreeTracks = document.getElementById('topThreeTracks');
 let trackSearch = document.getElementById('query');
 let displayName = document.getElementById('displayName');
-let playlists = document.getElementById("playlists");
+let playlists = document.getElementById("playlist-scroll");
 let playlistViewHeader = document.getElementById("playlist-view-header");
+let searchPlaylist = document.getElementById("searchPlaylist");
 let addButton = document.getElementById("ADD");
 
 var selectedSongID ='';
@@ -99,7 +100,7 @@ function searchSongSpotify(query){
                         trackSearch.value = query;
                         const noSongMessage = document.createElement('p');
                         noSongMessage.setAttribute('class','noSongMessage');
-                        noSongMessage.innerHTML= "no results,modify search and try again!";
+                        noSongMessage.innerHTML= "modify search and try again!";
                         noSongMessage.style.fontSize = '12px';
                         topThreeTracks.append(noSongMessage);
                         playlistViewHeader.innerHTML = "ownded playlists:";
@@ -130,18 +131,21 @@ function likedSongsDisplay(){
     let likedSongsID = 'liked-songs';
     owned_playlists.push('Liked Songs');
     var each_playlist = document.createElement("div");
+    each_playlist.setAttribute("id", likedSongsID);
+    each_playlist.setAttribute("class", "singlePlaylist");
     var playlist_cover = document.createElement("img");
     playlist_cover.src = './../images/liked_songs.png';;
-    playlist_cover.width = "100";
-    playlist_cover.height ="100";
+    playlist_cover.width = "90";
+    playlist_cover.height ="90";
+    playlist_cover.setAttribute('class','playlist-cover');
     var playlist_name = document.createElement("p");
+    playlist_name.setAttribute('class','playlist-name');
     playlist_name.appendChild(document.createTextNode('Liked Songs'));
     // playlist_name.innerHTML = playlist_name;
     each_playlist.appendChild(playlist_cover);
     each_playlist.appendChild(playlist_name);
     playlists.appendChild(each_playlist);
     each_playlist.onclick = () => selectPlaylist(ACCESS_TOKEN, likedSongsID);
-
 }
 
 /*in one call, maximum number of playlists items returned is 50. If .length == 50, 
@@ -161,11 +165,15 @@ function getPlaylists(ACCESS_TOKEN, user_id){
             if(playlist.owner.id == user_id){ //this will be the final list of playlists displayed as user can add songs to only these playlists
                 owned_playlists.push(playlist.name);
                 var each_playlist = document.createElement("div");
+                each_playlist.setAttribute("id", playlist.id);
+                each_playlist.setAttribute("class", "singlePlaylist");
                 var playlist_cover = document.createElement("img");
                 playlist_cover.src = playlist.images[0].url;
-                playlist_cover.width = "100";
-                playlist_cover.height ="100";
+                playlist_cover.width = "90";
+                playlist_cover.height ="90";
+                playlist_cover.setAttribute('class','playlist-cover');
                 var playlist_name = document.createElement("p");
+                playlist_name.setAttribute('class','playlist-name');
                 playlist_name.appendChild(document.createTextNode(playlist.name));
                 // playlist_name.innerHTML = playlist_name;
                 each_playlist.appendChild(playlist_cover);
@@ -179,8 +187,23 @@ function getPlaylists(ACCESS_TOKEN, user_id){
     })
 }
 
+searchPlaylist.onkeyup = function filterPlaylist(){
+    var input = document.getElementById("searchPlaylist");
+    var filter = input.value;
+    var single_playlist = document.getElementsByClassName('singlePlaylist');
+    for (var i = 0; i < single_playlist.length; i++){
+        var p_tag = single_playlist[i].getElementsByTagName("p")[0];
+        var p_value = p_tag.textContent || p_tag.innerText;
+        if(p_value.toLowerCase().indexOf(filter.toLowerCase()) > -1){
+            single_playlist[i].style.display = "";
+        }else{
+            single_playlist[i].style.display = "none";
+        }
+    }
+}
+
 function selectPlaylist(ACCESS_TOKEN, playlist_id){
-    console.log("Playlist Selected: "  + playlist_id);
+    console.log("Playlist Selected: "  + playlist_id  + " AT: " + ACCESS_TOKEN);
 }
 
 
