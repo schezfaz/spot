@@ -131,7 +131,6 @@ function searchSongSpotify(query){
 make another call using offset to get the next 50 items, as no. of playlists can be > 50*/
 
 /*Get all playlists where user is the creater or where playlist collaborative value is true*/
-/* currently collaboarative playlists are not being fetched inspite of scope containing the required parameters MmmMmmmM need to figure*/
 function getPlaylists(ACCESS_TOKEN, user_id){
     document.getElementById("searchBox").style.marginTop = "0px";
     fetch('https://api.spotify.com/v1/me/playlists?limit=50',
@@ -140,8 +139,6 @@ function getPlaylists(ACCESS_TOKEN, user_id){
     .then(data => {
         console.log("No. of Playlists" + Object.keys(data.items).length);
         console.log("User ID: " + user_id);
-        // console.log("All Playlist Names"+ data.items.map(playlist=>playlist.name+"\n"));
-        console.log("All owned playlists:");
         data.items.forEach(playlist => {
             if(playlist.owner.id == user_id){ //this will be the final list of playlists displayed as user can add songs to only these playlists
                 owned_playlists.push(playlist.name);
