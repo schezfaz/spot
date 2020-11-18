@@ -35,7 +35,12 @@ function  getUserName(ACCESS_TOKEN){
             });
         }
         else{
-            displayName.innerHTML = data.display_name;
+            if(data.display_name.length > 22){
+                displayName.innerHTML = data.display_name.toString().substring(0, 20) + "..";
+            }
+            else{
+                displayName.innerHTML = data.display_name;
+            }
             getPlaylists(ACCESS_TOKEN, data.id);
             return data.display_name;
         }
@@ -82,14 +87,16 @@ function searchSongSpotify(query){
                         document.getElementById("searchBox").style.marginTop = "0px";
                         for (let i = 0; i < 3; i++){
                             if(songsJSON['tracks']['items'][i]!=undefined){
-                                track = songsJSON['tracks']['items'][i]['name'];
-                                artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
-                                trackID = songsJSON['tracks']['items'][i]['id'];
+                                var track = songsJSON['tracks']['items'][i]['name'];
+                                var artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
+                                var trackID = songsJSON['tracks']['items'][i]['id'];
+                                // var songLink = songsJSON['tracks']['items'][i]['external_urls']['spotify'];
                                 if(i==0){selectedSongID = trackID;} //setting first result as selectedsong by default
                                 top3songs.push(trackID);
                                 const song = document.createElement('li');
                                 song.setAttribute('id',trackID);
                                 song.setAttribute('class','top3');
+                                // song.setAttribute('onclick',songLink);
                                 song.innerHTML = track + " - " + artist;
                                 song.onclick = function() {trackSelected(this.id)};
                                 topThreeTracks.append(song);
@@ -164,7 +171,6 @@ function getPlaylists(ACCESS_TOKEN, user_id){
         data.items.forEach(playlist => {
             if(playlist.owner.id == user_id){ //this will be the final list of playlists displayed as user can add songs to only these playlists
                 owned_playlists.push(playlist.name);
-                console.log(playlist);
                 var each_playlist = document.createElement("div");
                 each_playlist.setAttribute("id", playlist.id);
                 each_playlist.setAttribute("class", "singlePlaylist");
