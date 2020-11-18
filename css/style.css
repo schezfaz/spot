@@ -95,6 +95,10 @@ body::-webkit-scrollbar {
     display: inline-table;
 }
 
+.singlePlaylist:hover{
+    opacity: 0.5;
+}
+
 .playlist-cover{
     margin: 2px;
 }

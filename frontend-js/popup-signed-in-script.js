@@ -7,7 +7,8 @@ let searchPlaylist = document.getElementById("searchPlaylist");
 let addButton = document.getElementById("ADD");
 
 var selectedSongID ='';
-var owned_playlists = [];
+var ownedPlaylists = [];
+var finalPlaylists = [];
 let top3songs = [];
 let highlightedText = '';
 let ACCESS_TOKEN='';
@@ -136,7 +137,7 @@ function searchSongSpotify(query){
 /*function to get append liked playlist to the list of displayed playlists*/
 function likedSongsDisplay(){
     let likedSongsID = 'liked-songs';
-    owned_playlists.push('Liked Songs');
+    ownedPlaylists.push('Liked Songs');
     var each_playlist = document.createElement("div");
     each_playlist.setAttribute("id", likedSongsID);
     each_playlist.setAttribute("class", "singlePlaylist");
@@ -170,7 +171,7 @@ function getPlaylists(ACCESS_TOKEN, user_id){
         likedSongsDisplay();
         data.items.forEach(playlist => {
             if(playlist.owner.id == user_id){ //this will be the final list of playlists displayed as user can add songs to only these playlists
-                owned_playlists.push(playlist.name);
+                ownedPlaylists.push(playlist.name);
                 var each_playlist = document.createElement("div");
                 each_playlist.setAttribute("id", playlist.id);
                 each_playlist.setAttribute("class", "singlePlaylist");
@@ -186,12 +187,9 @@ function getPlaylists(ACCESS_TOKEN, user_id){
                 var playlist_name = document.createElement("p");
                 playlist_name.setAttribute('class','playlist-name');
                 playlist_name.appendChild(document.createTextNode(playlist.name));
-                // playlist_name.innerHTML = playlist_name;
                 each_playlist.appendChild(playlist_cover);
                 each_playlist.appendChild(playlist_name);
                 playlists.appendChild(each_playlist);
-                // playlists.innerHTML= playlists.innerHTML + playlist.name + "\n";
-                // console.log(playlist.name);
                 each_playlist.onclick = () => selectPlaylist(ACCESS_TOKEN, playlist.id);
             }
         });
@@ -215,8 +213,17 @@ searchPlaylist.onkeyup = function filterPlaylist(){
 
 function selectPlaylist(ACCESS_TOKEN, playlist_id){
     console.log("Playlist Selected: "  + playlist_id  + " AT: " + ACCESS_TOKEN);
+    var current_playlist = document.getElementById(playlist_id);
+    if(finalPlaylists.includes(playlist_id)){
+        current_playlist.style.background="none";
+        finalPlaylists = finalPlaylists.filter(e => e !== playlist_id);
+    }
+    else{
+        current_playlist.style.background="rgba(29,185,84,0.8)";
+        finalPlaylists.push(playlist_id);
+    }
+    console.log("final list of selected playlists: " + finalPlaylists);
 }
-
 
 document.getElementById('search-form').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -241,9 +248,6 @@ function trackSelected(trackID){
 
 /*if tab open is youtube.com/watch: fetch title i.e. name of video being watched */
 chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-    /*re-initialising access_token as when 2 requests are made for the same url, 
-    it cannot fetch access_token value due to the async nature of javascript*/
-    ACCESS_TOKEN = ACCESS_TOKEN; 
     let url = tabs[0].url;
     console.log("Current URL: " + url);
     if(url.includes("https://www.youtube.com/watch?")){
