@@ -4,7 +4,7 @@ let displayName = document.getElementById('displayName');
 let playlists = document.getElementById("playlist-scroll");
 let playlistViewHeader = document.getElementById("playlist-view-header");
 let searchPlaylist = document.getElementById("searchPlaylist");
-let addButton = document.getElementById("ADD");
+let addButtonText = document.getElementById("add-button-text");
 
 var selectedSongID ='';
 var ownedPlaylists = [];
@@ -212,17 +212,24 @@ searchPlaylist.onkeyup = function filterPlaylist(){
 }
 
 function selectPlaylist(ACCESS_TOKEN, playlist_id){
-    console.log("Playlist Selected: "  + playlist_id  + " AT: " + ACCESS_TOKEN);
+    // console.log("Playlist Selected: "  + playlist_id  + " AT: " + ACCESS_TOKEN);
     var current_playlist = document.getElementById(playlist_id);
     if(finalPlaylists.includes(playlist_id)){
         current_playlist.style.background="none";
-        finalPlaylists = finalPlaylists.filter(e => e !== playlist_id);
+        finalPlaylists = finalPlaylists.filter(pl => pl !== playlist_id);
     }
     else{
         current_playlist.style.background="rgba(29,185,84,0.8)";
         finalPlaylists.push(playlist_id);
     }
-    console.log("final list of selected playlists: " + finalPlaylists);
+    // console.log("final list of selected playlists: " + finalPlaylists);
+    if(finalPlaylists.length!=0){
+        addButtonText.innerHTML = "ADD TO " + finalPlaylists.length + " PLAYLIST(S)";
+        addButtonText.style.fontSize = "13px";
+    } else if(finalPlaylists.length == 0){
+        addButtonText.innerHTML = "ADD";
+        addButtonText.style.fontSize = "18px";
+    }
 }
 
 document.getElementById('search-form').addEventListener('submit', function (e) {
@@ -257,7 +264,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
         removeWords = ['youtube', ' - youtube','|','+','&','video', 'featuring', 'feat.',  'Watch Now', '!', 'by',
                 'studio','music video','music','Official Video - YouTube','Official Video','(official video)',
                 'Official Video w// Lyrics','24 hour version', '(Official Audio) - YouTube', 'w/', '(explicit)',
-                ' | official music video','official music video', 'audio','-audio', ' - audio ',
+                ' | official music video','official music video', 'audio','-audio', ' - audio ', 'audio version', 
                 'featuring', 'official music video','(official music video)', '(acoustic cover)','starring -','- starring',
                 '- cover','cover - ', '(official)',  ' - ', ' -', '- ',
                 'official', 'music video', 'official video', 'original video','(audio)','audio only', 'lyrics video',
@@ -286,7 +293,5 @@ document.querySelector('#sign-out').addEventListener('click', function () {
 
 document.querySelector('#add-song').addEventListener('click', function () {
     console.log("Selected song value: " + selectedSongID);
+    console.log("Final playlists to add to: " + finalPlaylists);
 });
-
-
-    
