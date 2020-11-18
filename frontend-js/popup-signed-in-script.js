@@ -164,11 +164,16 @@ function getPlaylists(ACCESS_TOKEN, user_id){
         data.items.forEach(playlist => {
             if(playlist.owner.id == user_id){ //this will be the final list of playlists displayed as user can add songs to only these playlists
                 owned_playlists.push(playlist.name);
+                console.log(playlist);
                 var each_playlist = document.createElement("div");
                 each_playlist.setAttribute("id", playlist.id);
                 each_playlist.setAttribute("class", "singlePlaylist");
                 var playlist_cover = document.createElement("img");
-                playlist_cover.src = playlist.images[0].url;
+                try{
+                    playlist_cover.src = playlist.images[0].url;
+                }catch(err){
+                    playlist_cover.src = './../images/empty_playlist_cover.png';
+                }
                 playlist_cover.width = "90";
                 playlist_cover.height ="90";
                 playlist_cover.setAttribute('class','playlist-cover');
