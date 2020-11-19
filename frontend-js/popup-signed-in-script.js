@@ -1,17 +1,8 @@
-let topThreeTracks = document.getElementById('topThreeTracks');
-let trackSearch = document.getElementById('query');
-let displayName = document.getElementById('displayName');
-let playlists = document.getElementById("playlist-scroll");
-let playlistViewHeader = document.getElementById("playlist-view-header");
-let searchPlaylist = document.getElementById("searchPlaylist");
-let addButtonText = document.getElementById("add-button-text");
-
-var selectedSongID ='';
-var ownedPlaylists = [];
-var finalPlaylists = [];
-let top3songs = [];
-let highlightedText = '';
-let ACCESS_TOKEN='';
+var resultsPlaceholder = document.getElementById('results');
+var displayName = document.getElementById('displayName');
+var playlists = document.getElementById("playlists");
+var playlistViewHeader = document.getElementById("playlist-view-header");
+var searchInput = document.getElementById("query");
 
 function getToken(){
     chrome.storage.sync.get('access_token', result => {
@@ -23,28 +14,24 @@ function getToken(){
     });
 }
 
-getToken();
+function getLastSearch(){
+    chrome.storage.sync.get('last_search', result => {
+        console.log("Last Search Query: " + result['last_search']['selectionText']);
+        var query  = result['last_search']['selectionText'];
+        searchInput.value = query;
+        chrome.runtime.sendMessage({ message: 'search', 'data': query })
+    });
+}
 
 function  getUserName(ACCESS_TOKEN){
     fetch('https://api.spotify.com/v1/me', 
         { headers: {'Authorization':'Bearer '+ ACCESS_TOKEN}
     }).then(response => response.json())
     .then(data => {
-        if(data.display_name==undefined){
-            chrome.runtime.sendMessage({ message: 'logout' }, function (response) {
-                if (response.message === 'success') window.close();
-            });
-        }
-        else{
-            if(data.display_name.length > 22){
-                displayName.innerHTML = data.display_name.toString().substring(0, 20) + "..";
-            }
-            else{
-                displayName.innerHTML = data.display_name;
-            }
-            getPlaylists(ACCESS_TOKEN, data.id);
-            return data.display_name;
-        }
+        displayName.innerHTML = data.display_name;
+        getPlaylists(ACCESS_TOKEN, data.id);
+        getLastSearch();
+        return data.display_name;
     });
 }
 
