@@ -99,7 +99,6 @@ function searchSongSpotify(query){
                                 // var songLink = songsJSON['tracks']['items'][i]['external_urls']['spotify'];
                                 if(i==0){
                                     selectedSongID = trackID;
-                                    createPreview(trackID);
                                 } //setting first result as selectedsong by default
                                 top3songs.push(trackID);
                                 const song = document.createElement('li');
