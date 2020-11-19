@@ -320,4 +320,27 @@ document.querySelector('#sign-out').addEventListener('click', function () {
 document.querySelector('#add-song').addEventListener('click', function () {
     console.log("Selected song value: " + selectedSongID);
     console.log("Final playlists to add to: " + finalPlaylists);
+
+    if((selectedSongID!=''  && selectedSongID!=undefined && selectedSongID!=null) && (finalPlaylists.length > 0)){
+        console.log("can add");
+        const finalSongName = document.getElementById(selectedSongID).innerHTML;
+        chrome.runtime.sendMessage({ message: 'addSongToPlaylists', data: [finalSongName, finalPlaylists.length] }, function (response) {
+            if (response.message === 'success'){
+                console.log("sent message!");
+            }
+        });
+    }
+    
+    else if((selectedSongID!='' && selectedSongID!=undefined && selectedSongID!=null) && (finalPlaylists.length == 0)){
+        console.log("Select atlease one playlist!");
+    }
+    
+    else if((selectedSongID=='' || selectedSongID==undefined || selectedSongID==null) && (finalPlaylists.length > 0)){
+        console.log('Search and select a song!');
+    }
+
+    else if((selectedSongID=='' || selectedSongID==undefined || selectedSongID==null) && (finalPlaylists.length == 0)){
+        console.log("select song and playlist!");
+    }
+   
 });
