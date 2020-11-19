@@ -22,7 +22,6 @@
         "storage",
         "identity",
         "tabs",
-        "notifications",
         "contextMenus",
         "https://api.spotify.com/"
     ]
