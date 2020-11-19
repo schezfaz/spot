@@ -60,10 +60,11 @@ body::-webkit-scrollbar {
 
 #playlist-view-header{
     color: #1DB954;
-    opacity: 0.7;
+    opacity: 0.9;
     font-size: 13px;
     text-align: center;
     font-family: GothamBold;
+    margin: 3px 0px;
 }
 
 #playlists{
@@ -110,18 +111,19 @@ body::-webkit-scrollbar {
 }
 
 #results{
-    margin-top: 80px;
+    margin-top: 60px;
     padding-left: 35px;
     font-size: 13px;
     font-family: GothamLight;
     font-weight: bold;
 }
 
-#topThreeTracks{
+#top-three-tracks{
     color: white;
     list-style: square;
-    margin: 10px 55px;
+    margin: 8px 55px;
     padding: 0px;
+    font-size: 12px;
 }
 
 .top3 {
@@ -267,8 +269,7 @@ table {
 	font-family: GothamBold;
 	height: 50px;
 	letter-spacing: 1px;
-    margin: 20px 18%;
-	padding: 3px;
+    margin: 2px 0px 20px 18%;
 	position: relative;
     text-decoration: none;
 	text-transform: uppercase;
