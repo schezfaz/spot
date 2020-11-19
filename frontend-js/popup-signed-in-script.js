@@ -1,10 +1,12 @@
-let topThreeTracks = document.getElementById('topThreeTracks');
+let topThreeTracks = document.getElementById('top-three-tracks');
 let trackSearch = document.getElementById('query');
 let displayName = document.getElementById('displayName');
 let playlists = document.getElementById("playlist-scroll");
 let playlistViewHeader = document.getElementById("playlist-view-header");
 let searchPlaylist = document.getElementById("searchPlaylist");
 let addButtonText = document.getElementById("add-button-text");
+let trackPreview = document.getElementById("track-preview");
+let resultBlock = document.getElementById("results");
 
 var selectedSongID ='';
 var ownedPlaylists = [];
@@ -42,6 +44,7 @@ function  getUserName(ACCESS_TOKEN){
             else{
                 displayName.innerHTML = data.display_name;
             }
+            resultBlock.style.marginTop = '60px';
             getPlaylists(ACCESS_TOKEN, data.id);
             return data.display_name;
         }
@@ -81,6 +84,8 @@ function searchSongSpotify(query){
         .then(response => response.json()) //display only top 3 results
         .then(songsJSON => {
             topThreeTracks.innerHTML = "";
+            trackPreview.innerHTML = null;
+            resultBlock.style.marginTop = '80px';
             top3songs.length = 0; 
             try{
                 if(songsJSON['tracks']!=undefined){
@@ -92,7 +97,10 @@ function searchSongSpotify(query){
                                 var artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
                                 var trackID = songsJSON['tracks']['items'][i]['id'];
                                 // var songLink = songsJSON['tracks']['items'][i]['external_urls']['spotify'];
-                                if(i==0){selectedSongID = trackID;} //setting first result as selectedsong by default
+                                if(i==0){
+                                    selectedSongID = trackID;
+                                    createPreview(trackID);
+                                } //setting first result as selectedsong by default
                                 top3songs.push(trackID);
                                 const song = document.createElement('li');
                                 song.setAttribute('id',trackID);
@@ -105,6 +113,7 @@ function searchSongSpotify(query){
                             }
                         }
                     }else {
+                        resultBlock.style.marginTop = '80px';
                         trackSearch.value = query;
                         const noSongMessage = document.createElement('p');
                         noSongMessage.setAttribute('class','noSongMessage');
@@ -118,6 +127,7 @@ function searchSongSpotify(query){
                     searchSongSpotify(query);
                 }
             } catch(err){
+                resultBlock.style.marginTop = '80px';
                 trackSearch.value = query;
                 console.log("Caught error :" + err + " while searching for: " + query);
                 const needToClick = document.createElement('p');
@@ -131,6 +141,8 @@ function searchSongSpotify(query){
     }else{
         playlistViewHeader.innerHTML = "owned playlists:";
         topThreeTracks.innerHTML = '';
+        trackPreview.innerHTML = null;
+        resultBlock.style.marginTop = '60px';
     }
 }
 
@@ -239,7 +251,21 @@ document.getElementById('search-form').addEventListener('submit', function (e) {
     searchSongSpotify(trackSearch.value);
 }, false);
 
+function createPreview(trackID){
+    trackPreview.innerHTML = null;
+    trackPreview.style.display = 'initial';
+    var preview = document.createElement('iframe');
+    preview.setAttribute("width", 290);
+    preview.setAttribute("height", 80);
+    preview.setAttribute("frameborder", "0");
+    preview.setAttribute("allowtransparency", "true");
+    preview.setAttribute("allow", "encrypted-media");
+    preview.src = "https://open.spotify.com/embed/track/" + trackID;
+    trackPreview.appendChild(preview);
+}
+
 function trackSelected(trackID){
+    createPreview(trackID);
     let trackElement = document.getElementById(trackID);
     trackSearch.value = trackElement.innerHTML;
     selectedSongID = trackID;
