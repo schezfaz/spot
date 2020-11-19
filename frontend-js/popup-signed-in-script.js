@@ -143,6 +143,13 @@ function searchSongSpotify(query){
         topThreeTracks.innerHTML = '';
         trackPreview.innerHTML = null;
         resultBlock.style.marginTop = '60px';
+        for(let i=0;i<finalPlaylists.length;i++){
+            var currPlaylist  = document.getElementById(finalPlaylists[i]);
+            currPlaylist.style.background="none";
+        }
+        finalPlaylists.length = 0;
+        addButtonText.innerHTML = "ADD";
+        addButtonText.style.fontSize = "18px";
     }
 }
 
@@ -165,7 +172,7 @@ function likedSongsDisplay(){
     each_playlist.appendChild(playlist_cover);
     each_playlist.appendChild(playlist_name);
     playlists.appendChild(each_playlist);
-    each_playlist.onclick = () => selectPlaylist(ACCESS_TOKEN, likedSongsID);
+    each_playlist.onclick = () => selectPlaylist(likedSongsID);
 }
 
 /*in one call, maximum number of playlists items returned is 50. If .length == 50, 
@@ -202,7 +209,7 @@ function getPlaylists(ACCESS_TOKEN, user_id){
                 each_playlist.appendChild(playlist_cover);
                 each_playlist.appendChild(playlist_name);
                 playlists.appendChild(each_playlist);
-                each_playlist.onclick = () => selectPlaylist(ACCESS_TOKEN, playlist.id);
+                each_playlist.onclick = () => selectPlaylist(playlist.id);
             }
         });
     })
@@ -223,7 +230,7 @@ searchPlaylist.onkeyup = function filterPlaylist(){
     }
 }
 
-function selectPlaylist(ACCESS_TOKEN, playlist_id){
+function selectPlaylist(playlist_id){
     // console.log("Playlist Selected: "  + playlist_id  + " AT: " + ACCESS_TOKEN);
     var current_playlist = document.getElementById(playlist_id);
     if(finalPlaylists.includes(playlist_id)){
