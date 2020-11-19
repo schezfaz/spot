@@ -83,6 +83,7 @@ function searchSongSpotify(query){
             {headers: {'Authorization': 'Bearer ' + ACCESS_TOKEN}})
         .then(response => response.json()) //display only top 3 results
         .then(songsJSON => {
+            trackSearch.value = query;
             topThreeTracks.innerHTML = "";
             trackPreview.innerHTML = null;
             resultBlock.style.marginTop = '80px';
