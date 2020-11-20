@@ -105,18 +105,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
         return true;
     }
-
-    else if (request.message === 'addSongToPlaylists') {
-        console.log('received');
-        console.log('data: '+request.data);
-        var textPreparingToAdd = {
-            type: 'basic',
-            iconUrl: 'images/spot-48.png',
-            title: 'ADDING TO PLAYLIST!',
-            message: "Adding '"+request.data[0]+"' to " + request.data[1] +" playlist(s)"
-        };
-        chrome.notifications.create('SpotAddNotif',textPreparingToAdd);
-        sendResponse({ message: 'success' });
-        return true;
-    }
 });
