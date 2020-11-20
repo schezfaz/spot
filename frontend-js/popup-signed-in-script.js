@@ -379,7 +379,7 @@ document.querySelector('#add-song').addEventListener('click', function () {
                         console.log("added to liked-songs!");
                         toasts.open({
                             type: 'canAdd',
-                            message: "Added to: "+addingToPlaylistName+"Successfully!"
+                            message: "Added to: "+addingToPlaylistName+" Successfully!"
                         });
                     }).catch(err => notifications.error("Error occured while adding to Liked Songs, try again!")
                 )
