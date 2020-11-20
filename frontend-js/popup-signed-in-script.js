@@ -125,7 +125,7 @@ function searchSongSpotify(query){
                                 var track = songsJSON['tracks']['items'][i]['name'];
                                 var artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
                                 var trackID = songsJSON['tracks']['items'][i]['id'];
-                                var trackURI = songsJSON['tracks']['items'][i]['uri'];
+                                let trackURI = songsJSON['tracks']['items'][i]['uri'];
                                 // var songLink = songsJSON['tracks']['items'][i]['external_urls']['spotify'];
                                 if(i==0){
                                     selectedSongID = trackID;
