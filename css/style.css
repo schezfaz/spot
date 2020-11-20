@@ -241,25 +241,6 @@ table {
     color: #FFF;
 }
 
-
-/* 
-.searchBox:hover > .searchInput {
-    width: 150px;
-    padding: 0 6px;
-}
-
-.searchBox:hover > .searchButton {
-  background: white;
-  color : #2f3640;
-}
-
-@media screen and (max-width: 620px) {
-.searchBox:hover > .searchInput {
-    width: 100px;
-    padding: 0 6px;
-}
-} */
-
 .btn {
 	background-image: linear-gradient(to right, #1DB954 0%, #1DB954 100%);
 	border-radius: 40px;

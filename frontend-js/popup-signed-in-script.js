@@ -15,6 +15,34 @@ let top3songs = [];
 let highlightedText = '';
 let ACCESS_TOKEN='';
 
+var notifications = new Notyf(
+    { 
+        duration: 2000,
+        dismissible: true,
+        ripple: true,
+        icon: true
+    }
+);
+
+var toasts = new Notyf({
+    types: [
+      {
+        duration: 2500,
+        dismissible: true,
+        type: 'canAdd',
+        background: '#1DB954'
+      },
+
+      {
+        duration: 2500,
+        dismissible: true,
+        type: 'cannotAdd',
+        background: '#323232'
+      }
+    ]
+});
+  
+
 function getToken(){
     chrome.storage.sync.get('access_token', result => {
         console.log("ACCESS_TOKEN: " + result['access_token']);
@@ -299,12 +327,12 @@ chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
                 'Official Video w// Lyrics','24 hour version', '(Official Audio) - YouTube', 'w/', '(explicit)',
                 ' | official music video','official music video', 'audio','-audio', ' - audio ', 'audio version', 
                 'featuring', 'official music video','(official music video)', '(acoustic cover)','starring -','- starring',
-                '- cover','cover - ', '(official)',  ' - ', ' -', '- ',
+                '- cover','cover - ', '(official)',  ' - ', ' -', '- ', '(teaser)','teaser', '//','/',
                 'official', 'music video', 'official video', 'original video','(audio)','audio only', 'lyrics video',
                 '- lyrics',  'lyrics', '(lyrics)','(official lyric video)','lyric','ft. ' ,'cover', 'original cover','  ','   '];
         
         for(let i =0; i<removeWords.length;i++){
-            title = title.replaceAll(removeWords[i].toLowerCase()," ");
+            title = title.replaceAll(removeWords[i].toLowerCase(),"");
         }
 
         title = title.trim().replace(/\(\d+\)/g, "");
@@ -327,27 +355,43 @@ document.querySelector('#sign-out').addEventListener('click', function () {
 document.querySelector('#add-song').addEventListener('click', function () {
     console.log("Selected song value: " + selectedSongID);
     console.log("Final playlists to add to: " + finalPlaylists);
+    // notifications.error("Successfully saved song to playlist!");
 
     if((selectedSongID!=''  && selectedSongID!=undefined && selectedSongID!=null) && (finalPlaylists.length > 0)){
         console.log("can add");
         const finalSongName = document.getElementById(selectedSongID).innerHTML;
-        chrome.runtime.sendMessage({ message: 'addSongToPlaylists', data: [finalSongName, finalPlaylists.length] }, function (response) {
-            if (response.message === 'success'){
-                console.log("sent message!");
-            }
+        toasts.open({
+            type: 'canAdd',
+            message: "Adding '" + finalSongName + "' to " + finalPlaylists.length + " playlist(s)!"
         });
+
+        toasts.open({
+            type: 'canAdd',
+            duration: 2900,
+            message: "Added Successfully!"
+        })
+          
     }
     
     else if((selectedSongID!='' && selectedSongID!=undefined && selectedSongID!=null) && (finalPlaylists.length == 0)){
-        console.log("Select atlease one playlist!");
+        console.log("Select atleast one playlist!"); 
+        toasts.open({
+            type: 'cannotAdd',
+            message: "Select alteast one playlist!"
+        })
     }
     
     else if((selectedSongID=='' || selectedSongID==undefined || selectedSongID==null) && (finalPlaylists.length > 0)){
         console.log('Search and select a song!');
+        toasts.open({
+            type: 'cannotAdd',
+            message: "Search and select a song!"
+        })
     }
 
     else if((selectedSongID=='' || selectedSongID==undefined || selectedSongID==null) && (finalPlaylists.length == 0)){
         console.log("select song and playlist!");
+        notifications.error("no song /playlist selected");
     }
    
 });
