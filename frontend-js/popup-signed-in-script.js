@@ -9,6 +9,7 @@ let trackPreview = document.getElementById("track-preview");
 let resultBlock = document.getElementById("results");
 
 var selectedSongID ='';
+var selectedTrackURI='';
 var ownedPlaylists = [];
 var finalPlaylists = [];
 let top3songs = [];
@@ -27,7 +28,7 @@ var notifications = new Notyf(
 var toasts = new Notyf({
     types: [
       {
-        duration: 2500,
+        duration: 1500,
         dismissible: true,
         type: 'canAdd',
         background: '#1DB954'
@@ -100,7 +101,6 @@ function searchSongSpotify(query){
     trackSearch.value = query;
     console.log("Searching for: " + query + "!");
     if(ACCESS_TOKEN==undefined || ACCESS_TOKEN=='' || ACCESS_TOKEN==null || ACCESS_TOKEN==' '){
-        console.log('first if');
         chrome.storage.sync.get('access_token', result => {
             ACCESS_TOKEN  = result['access_token'];
         });
@@ -125,9 +125,11 @@ function searchSongSpotify(query){
                                 var track = songsJSON['tracks']['items'][i]['name'];
                                 var artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
                                 var trackID = songsJSON['tracks']['items'][i]['id'];
+                                var trackURI = songsJSON['tracks']['items'][i]['uri'];
                                 // var songLink = songsJSON['tracks']['items'][i]['external_urls']['spotify'];
                                 if(i==0){
                                     selectedSongID = trackID;
+                                    selectedTrackURI = trackURI;
                                 } //setting first result as selectedsong by default
                                 top3songs.push(trackID);
                                 const song = document.createElement('li');
@@ -135,7 +137,7 @@ function searchSongSpotify(query){
                                 song.setAttribute('class','top3');
                                 // song.setAttribute('onclick',songLink);
                                 song.innerHTML = track + " - " + artist;
-                                song.onclick = function() {trackSelected(this.id)};
+                                song.onclick = function() {trackSelected(this.id, trackURI)};
                                 topThreeTracks.append(song);
                                 playlistViewHeader.innerHTML = "select one or more playlists to add to:";
                             }
@@ -299,11 +301,13 @@ function createPreview(trackID){
     trackPreview.appendChild(preview);
 }
 
-function trackSelected(trackID){
+function trackSelected(trackID, trackURI){
     createPreview(trackID);
     let trackElement = document.getElementById(trackID);
     trackSearch.value = trackElement.innerHTML;
     selectedSongID = trackID;
+    selectedTrackURI = trackURI;
+    console.log("track selected URI: " + selectedTrackURI);
     console.log("Selected Song ID: " + selectedSongID);
     for(let i = 0; i<top3songs.length ;i++){
         let song = document.getElementById(top3songs[i]);
@@ -355,26 +359,51 @@ document.querySelector('#sign-out').addEventListener('click', function () {
 document.querySelector('#add-song').addEventListener('click', function () {
     console.log("Selected song value: " + selectedSongID);
     console.log("Final playlists to add to: " + finalPlaylists);
-    // notifications.error("Successfully saved song to playlist!");
+    console.log("Access Token: " + ACCESS_TOKEN);
 
-    if((selectedSongID!=''  && selectedSongID!=undefined && selectedSongID!=null) && (finalPlaylists.length > 0)){
-        console.log("can add");
+    if((selectedSongID!=''  && selectedSongID!=undefined && selectedSongID!=null) && (finalPlaylists.length > 0) 
+        && (ACCESS_TOKEN!=undefined && ACCESS_TOKEN!='' && ACCESS_TOKEN!=null && ACCESS_TOKEN!=' ')){
         const finalSongName = document.getElementById(selectedSongID).innerHTML;
         toasts.open({
             type: 'canAdd',
             message: "Adding '" + finalSongName + "' to " + finalPlaylists.length + " playlist(s)!"
-        });
-
-        toasts.open({
-            type: 'canAdd',
-            duration: 2900,
-            message: "Added Successfully!"
         })
-          
+
+        for(let i = 0; i < finalPlaylists.length; i++){
+            var addingToPlaylistName = document.getElementById(finalPlaylists[i]).getElementsByTagName("p")[0].innerHTML;
+            if(finalPlaylists[i]=='liked-songs'){
+                fetch("https://api.spotify.com/v1/me/tracks?ids="+selectedSongID, {
+                        method: 'PUT',
+                        headers: { 'Authorization': 'Bearer ' + ACCESS_TOKEN}
+                    }).then(response => {
+                        console.log("added to liked-songs!");
+                        toasts.open({
+                            type: 'canAdd',
+                            message: "Added to: "+addingToPlaylistName+"Successfully!"
+                        });
+                    }).catch(err => notifications.error("Error occured while adding to Liked Songs, try again!")
+                )
+            }
+
+            else{
+                console.log("add for normal playlist"); 
+                fetch("https://api.spotify.com/v1/playlists/"+finalPlaylists[i]+"/tracks?uris="+selectedTrackURI,{
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + ACCESS_TOKEN}
+                }).then(response=> {
+                    console.log("added to playlist: " + finalPlaylists[i]);                 
+                    toasts.open({
+                        type: 'canAdd',
+                        message: "Added to: "+addingToPlaylistName+"Successfully!"
+                    });
+                }).catch(err=> {
+                    notifications.error("Error occured while adding to: " + addingToPlaylistName +"try again!");
+                })
+            }
+        }         
     }
     
     else if((selectedSongID!='' && selectedSongID!=undefined && selectedSongID!=null) && (finalPlaylists.length == 0)){
-        console.log("Select atleast one playlist!"); 
         toasts.open({
             type: 'cannotAdd',
             message: "Select alteast one playlist!"
@@ -382,7 +411,6 @@ document.querySelector('#add-song').addEventListener('click', function () {
     }
     
     else if((selectedSongID=='' || selectedSongID==undefined || selectedSongID==null) && (finalPlaylists.length > 0)){
-        console.log('Search and select a song!');
         toasts.open({
             type: 'cannotAdd',
             message: "Search and select a song!"
@@ -390,8 +418,6 @@ document.querySelector('#add-song').addEventListener('click', function () {
     }
 
     else if((selectedSongID=='' || selectedSongID==undefined || selectedSongID==null) && (finalPlaylists.length == 0)){
-        console.log("select song and playlist!");
         notifications.error("no song /playlist selected");
     }
-   
 });
