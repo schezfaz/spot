@@ -331,12 +331,12 @@ chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
                 'Official Video w// Lyrics','24 hour version', '(Official Audio) - YouTube', 'w/', '(explicit)',
                 ' | official music video','official music video', 'audio','-audio', ' - audio ', 'audio version', 
                 'featuring', 'official music video','(official music video)', '(acoustic cover)','starring -','- starring',
-                '- cover','cover - ', '(official)',  ' - ', ' -', '- ', '(teaser)','teaser', '//','/',
+                '- cover','cover - ', '(official)',  ' - ', ' -', '- ', '(teaser)','teaser', '//','/', '(Full Album)',
                 'official', 'music video', 'official video', 'original video','(audio)','audio only', 'lyrics video',
                 '- lyrics',  'lyrics', '(lyrics)','(official lyric video)','lyric','ft. ' ,'cover', 'original cover','  ','   '];
         
         for(let i =0; i<removeWords.length;i++){
-            title = title.replaceAll(removeWords[i].toLowerCase(),"");
+            title = title.replaceAll(removeWords[i].toLowerCase()," ");
         }
 
         title = title.trim().replace(/\(\d+\)/g, "");
@@ -364,10 +364,10 @@ document.querySelector('#add-song').addEventListener('click', function () {
     if((selectedSongID!=''  && selectedSongID!=undefined && selectedSongID!=null) && (finalPlaylists.length > 0) 
         && (ACCESS_TOKEN!=undefined && ACCESS_TOKEN!='' && ACCESS_TOKEN!=null && ACCESS_TOKEN!=' ')){
         const finalSongName = document.getElementById(selectedSongID).innerHTML;
-        toasts.open({
-            type: 'canAdd',
-            message: "Adding '" + finalSongName + "' to " + finalPlaylists.length + " playlist(s)!"
-        })
+        // toasts.open({
+        //     type: 'canAdd',
+        //     message: "Adding '" + finalSongName + "' to " + finalPlaylists.length + " playlist(s)!"
+        // })
 
         for(let i = 0; i < finalPlaylists.length; i++){
             var addingToPlaylistName = document.getElementById(finalPlaylists[i]).getElementsByTagName("p")[0].innerHTML;
