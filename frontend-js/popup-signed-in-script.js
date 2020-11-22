@@ -171,6 +171,8 @@ function searchSongSpotify(query){
     }else{
         playlistViewHeader.innerHTML = "owned playlists:";
         topThreeTracks.innerHTML = '';
+        selectedSongID = '';
+        selectedTrackURI = '';
         trackPreview.innerHTML = null;
         resultBlock.style.marginTop = '60px';
         for(let i=0;i<finalPlaylists.length;i++){
@@ -363,6 +365,7 @@ document.querySelector('#add-song').addEventListener('click', function () {
 
     if((selectedSongID!=''  && selectedSongID!=undefined && selectedSongID!=null) && (finalPlaylists.length > 0) 
         && (ACCESS_TOKEN!=undefined && ACCESS_TOKEN!='' && ACCESS_TOKEN!=null && ACCESS_TOKEN!=' ')){
+        console.log
         const finalSongName = document.getElementById(selectedSongID).innerHTML;
         // toasts.open({
         //     type: 'canAdd',
@@ -394,7 +397,7 @@ document.querySelector('#add-song').addEventListener('click', function () {
                     console.log("added to playlist: " + finalPlaylists[i]);                 
                     toasts.open({
                         type: 'canAdd',
-                        message: "Added to: "+ addingToPlaylistName +"Successfully!"
+                        message: "Added to: "+ addingToPlaylistName +" Successfully!"
                     });
                 }).catch(err=> {
                     notifications.error("Error occured while adding to: " + addingToPlaylistName +"try again!");
