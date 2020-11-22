@@ -55,7 +55,7 @@ chrome.commands.onCommand.addListener(function (command) {
                     type: 'basic',
                     iconUrl: 'images/spot-48.png',
                     title: 'ERROR SPOTTED!',
-                    message: 'The tab currently open is access-restricted, try highlighting text (to trigger a spotify search) from a non-access restricted tab!'
+                    message: 'The tab currently open is keyboard access-restricted, try right-clicking on the selected text to trigger a spotify search!'
                 };
                 chrome.notifications.create('accessRestrictedNotif',accessRestrictedNotif);
             }else if(results==null || results.lenght == 0 || results=='' || results.toString().trim() == ''){
