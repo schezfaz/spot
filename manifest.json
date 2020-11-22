@@ -1,7 +1,7 @@
 {
     "manifest_version" : 2,
     "name" : "SPOT",
-    "version": "1.0",
+    "version": "2.0",
     "description": "An extension that allows you add a song playing on Youtube to any of your playlists on spotify.",
     "icons": {
         "128": "images/spot-128.png",
@@ -18,10 +18,22 @@
         "default_popup": "popup.html"
     },
 
+    "commands": {
+        "hotkey-highlight": {
+          "suggested_key": {
+            "default": "Ctrl+Shift+S",
+            "windows": "Ctrl+Shift+S",
+            "mac": "Command+Shift+S"
+          },
+          "description": "hotkey-highlight"
+        }
+    },
+
     "permissions": [
         "storage",
         "identity",
         "tabs",
+        "activeTab",
         "notifications",
         "contextMenus",
         "https://api.spotify.com/"
