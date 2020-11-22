@@ -43,6 +43,54 @@ function create_spotify_end_point() {
     return oauth2_url;
 }
 
+chrome.commands.onCommand.addListener(function (command) {
+    console.log("command: "+command);
+    if (command == "hotkey-highlight") {
+        chrome.tabs.executeScript({
+            code: '(' + getSelectionText.toString() + ')()'
+        }, function (results) {
+            console.log("results: " + results);
+            if(results==undefined){
+                var accessRestrictedNotif = {
+                    type: 'basic',
+                    iconUrl: 'images/spot-48.png',
+                    title: 'ERROR SPOTTED!',
+                    message: 'The tab currently open is access-restricted, try highlighting text (to trigger a spotify search) from a non-access restricted tab!'
+                };
+                chrome.notifications.create('accessRestrictedNotif',accessRestrictedNotif);
+            }else if(results==null || results.lenght == 0 || results=='' || results.toString().trim() == ''){
+                var nothingHighlightedNotif = {
+                    type: 'basic',
+                    iconUrl: 'images/spot-48.png',
+                    title: 'NOTHING SPOTTED!',
+                    message: 'You may have forgotten to highlight any text! Select/highlight text from the browser to trigger a spotify search!'
+                };
+                chrome.notifications.create('nothingHighlightedNotif',nothingHighlightedNotif);
+            }else{
+                chrome.storage.sync.set({'highlighted_text': results.toString()},function(){
+                    var textSpottedNotif = {
+                        type: 'basic',
+                        iconUrl: 'images/spot-48.png',
+                        title: 'SPOTTED!',
+                        message: 'Search results for "'+ results.toString() +'" are ready. Open the SPOT extention to add the best match to your Spotify playlists!'
+                    };
+                    chrome.notifications.create('SpottedNotif',textSpottedNotif);
+                })
+            }
+            let e = chrome.runtime.lastError;
+            if(e !== undefined){
+              console.log("runtime error detected!");
+            }
+        });
+    }
+});
+
+function getSelectionText() {
+    var text = "";
+    text = window.getSelection().toString();
+    return text;
+}
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message === 'login') {
         if (user_signed_in) {
