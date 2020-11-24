@@ -139,10 +139,29 @@ body::-webkit-scrollbar {
 
 #top-three-tracks{
     color: white;
-    list-style: square;
-    margin: 8px 55px;
+    margin: 8px 75px 10px 45px;
     padding: 0px;
     font-size: 12px;
+    overflow: auto;
+    list-style: inside;
+    scrollbar-width: none;
+}
+
+#top-three-tracks li{
+    margin-bottom: 3px;
+}
+
+#top-three-tracks::-webkit-scrollbar{
+    background-color: rgba(255,255,255,0.5);
+    width: 4px;
+}
+
+#top-three-tracks::-webkit-scrollbar-thumb {
+    background-color: rgba(29,185,84,0.8);;
+}
+
+#top-three-tracks::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 .top3 {
