@@ -48,7 +48,7 @@ function getToken(){
     chrome.storage.sync.get('access_token', result => {
         console.log("ACCESS_TOKEN: " + result['access_token']);
         ACCESS_TOKEN  = result['access_token'];
-        if (ACCESS_TOKEN != undefined) {
+        if (ACCESS_TOKEN != undefined && ACCESS_TOKEN!='' && ACCESS_TOKEN.toString().trim().length > 0) {
             getUserName(ACCESS_TOKEN);
         }
     });
@@ -63,7 +63,7 @@ function  getUserName(ACCESS_TOKEN){
     .then(data => {
         if(data.display_name==undefined){
             chrome.runtime.sendMessage({ message: 'logout' }, function (response) {
-                if (response.message === 'success') window.close();
+                window.close();
             });
         }
         else{
@@ -109,10 +109,11 @@ function searchSongSpotify(query){
     if(query!=null && query!=' '&& query.trim().length>0 && query!=undefined){
         fetch("https://api.spotify.com/v1/search?q=" + encodeURI(query) + "&type=track",
             {headers: {'Authorization': 'Bearer ' + ACCESS_TOKEN}})
-        .then(response => response.json()) //display only top 3 results
+        .then(response => response.json()) 
         .then(songsJSON => {
             trackSearch.value = query;
             topThreeTracks.innerHTML = "";
+            topThreeTracks.style.height = "88px";
             trackPreview.innerHTML = null;
             resultBlock.style.marginTop = '80px';
             top3songs.length = 0; 
@@ -120,7 +121,7 @@ function searchSongSpotify(query){
                 if(songsJSON['tracks']!=undefined){
                     if(songsJSON['tracks']['items'].length > 0){
                         document.getElementById("searchBox").style.marginTop = "0px";
-                        for (let i = 0; i < 3; i++){
+                        for (let i = 0; i < songsJSON['tracks']['items'].length; i++){
                             if(songsJSON['tracks']['items'][i]!=undefined){
                                 var track = songsJSON['tracks']['items'][i]['name'];
                                 var artist = songsJSON['tracks']['items'][i]['artists'][0]['name'];
@@ -149,6 +150,8 @@ function searchSongSpotify(query){
                         noSongMessage.setAttribute('class','noSongMessage');
                         noSongMessage.innerHTML= "modify search and try again!";
                         noSongMessage.style.fontSize = '12px';
+                        noSongMessage.style.marginLeft = '14px';
+                        topThreeTracks.style.height = "auto";
                         topThreeTracks.append(noSongMessage);
                         playlistViewHeader.innerHTML = "ownded playlists:";
                     }
@@ -165,12 +168,14 @@ function searchSongSpotify(query){
                 needToClick.innerHTML = 'click to search!';
                 needToClick.style.fontSize = '15px';
                 needToClick.style.marginLeft='38px';
+                topThreeTracks.style.height = "auto";
                 topThreeTracks.append(needToClick);
             }
         });
     }else{
         playlistViewHeader.innerHTML = "owned playlists:";
         topThreeTracks.innerHTML = '';
+        topThreeTracks.style.height = "auto";
         selectedSongID = '';
         selectedTrackURI = '';
         trackPreview.innerHTML = null;
@@ -400,7 +405,7 @@ document.querySelector('#add-song').addEventListener('click', function () {
                         message: "Added to: "+ addingToPlaylistName +" Successfully!"
                     });
                 }).catch(err=> {
-                    notifications.error("Error occured while adding to: " + addingToPlaylistName +"try again!");
+                    notifications.error("Error occured while adding to: " + addingToPlaylistName +", try again!");
                 })
             }
         }         
