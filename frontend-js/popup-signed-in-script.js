@@ -382,7 +382,7 @@ document.querySelector('#add-song').addEventListener('click', function () {
         // })
 
         for(let i = 0; i < finalPlaylists.length; i++){
-            var addingToPlaylistName = document.getElementById(finalPlaylists[i]).getElementsByTagName("p")[0].innerHTML;
+            let addingToPlaylistName = document.getElementById(finalPlaylists[i]).getElementsByTagName("p")[0].innerHTML;
             if(finalPlaylists[i]=='liked-songs'){
                 fetch("https://api.spotify.com/v1/me/tracks?ids="+selectedSongID, {
                         method: 'PUT',
