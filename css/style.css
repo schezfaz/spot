@@ -142,9 +142,11 @@ body::-webkit-scrollbar {
     margin: 8px 75px 10px 45px;
     padding: 1px;
     font-size: 12px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     list-style: inside;
     scrollbar-width: none;
+
 }
 
 #top-three-tracks li{
