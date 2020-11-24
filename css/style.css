@@ -140,7 +140,7 @@ body::-webkit-scrollbar {
 #top-three-tracks{
     color: white;
     margin: 8px 75px 10px 45px;
-    padding: 0px;
+    padding: 1px;
     font-size: 12px;
     overflow: auto;
     list-style: inside;

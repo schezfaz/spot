@@ -109,7 +109,7 @@ function searchSongSpotify(query){
     if(query!=null && query!=' '&& query.trim().length>0 && query!=undefined){
         fetch("https://api.spotify.com/v1/search?q=" + encodeURI(query) + "&type=track",
             {headers: {'Authorization': 'Bearer ' + ACCESS_TOKEN}})
-        .then(response => response.json()) //display only top 3 results
+        .then(response => response.json()) 
         .then(songsJSON => {
             trackSearch.value = query;
             topThreeTracks.innerHTML = "";
