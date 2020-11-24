@@ -113,7 +113,6 @@ function searchSongSpotify(query){
         .then(songsJSON => {
             trackSearch.value = query;
             topThreeTracks.innerHTML = "";
-            topThreeTracks.style.height = "88px";
             trackPreview.innerHTML = null;
             resultBlock.style.marginTop = '80px';
             top3songs.length = 0; 
@@ -121,6 +120,11 @@ function searchSongSpotify(query){
                 if(songsJSON['tracks']!=undefined){
                     if(songsJSON['tracks']['items'].length > 0){
                         document.getElementById("searchBox").style.marginTop = "0px";
+                        if(songsJSON['tracks']['items'].length >= 3 ){
+                            topThreeTracks.style.height = "88px";
+                        }else{
+                            topThreeTracks.style.height = "auto";
+                        }
                         for (let i = 0; i < songsJSON['tracks']['items'].length; i++){
                             if(songsJSON['tracks']['items'][i]!=undefined){
                                 var track = songsJSON['tracks']['items'][i]['name'];
