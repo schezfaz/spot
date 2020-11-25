@@ -1,7 +1,10 @@
 # SPOT
-An extension that allows you to directly add a song to your spotify playlist, on the go.
+> An browser extension that allows you to directly add a song to your spotify playlist
 
-## Installation Instructions
+![spot-landing page](images/spot-landing.PNG) 
+
+
+## Local Installation Instructions
 
 ### Chrome Extension
 - Open Chrome Extensions and enable developer mode
@@ -20,7 +23,3 @@ An extension that allows you to directly add a song to your spotify playlist, on
 - Open ```background.js```
 - Replace ```CLIENT_ID``` and ```REDIRECT_URI``` with your own values
 - Reload the extension
-
-## How to use
-- Any time during web browsing, click on the extension and search for a song
-- Coming soon: add to playlist
