@@ -1,6 +1,6 @@
 # SPOT
 
-A Chrome extension that allows you to  add a song to your spotify playlist, directly from your browser!
+A Chrome extension that allows you to add *any* song to your spotify playlist, directly from your browser!
 
 ## Usage
 
@@ -8,7 +8,7 @@ A Chrome extension that allows you to  add a song to your spotify playlist, dire
 
     Click on 'sign-in & authenticate' to log in and grant access permissions.
 
-    <img src="images/spot-login.gif" width="auto" height="300"/>
+    <img src="images/spot-login.gif" width="auto" height="400"/>
 
 - **Search for music & Preview**
      
@@ -47,6 +47,7 @@ A Chrome extension that allows you to  add a song to your spotify playlist, dire
     - Notification indicates that your search results are ready
     - Open the SPOT extension to add best match results to your playlists!
 
+    <img src="images/spot-rightclick.gif" width="auto" height="500"/>
 
 ## Local Installation Instructions
 
