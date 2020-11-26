@@ -148,20 +148,14 @@ function searchSongSpotify(query){
                             }
                         }
                     }else {
-                        resultBlock.style.marginTop = '80px';
                         trackSearch.value = query;
-                        const noSongMessage = document.createElement('p');
-                        noSongMessage.setAttribute('class','noSongMessage');
-                        noSongMessage.innerHTML= "modify search and try again!";
-                        noSongMessage.style.fontSize = '12px';
-                        noSongMessage.style.marginLeft = '14px';
-                        topThreeTracks.style.height = "auto";
-                        topThreeTracks.append(noSongMessage);
-                        playlistViewHeader.innerHTML = "ownded playlists:";
+                        modifySearchBlock();
                     }
                 }else{
-                    console.log("400 Status Error, Calling function again!");
-                    searchSongSpotify(query);
+                    console.log("400 Status Error");
+                    console.log("Error: " + songsJSON['error']['status']);
+                    console.log("ACC" + ACCESS_TOKEN);
+                    modifySearchBlock();
                 }
             } catch(err){
                 resultBlock.style.marginTop = '80px';
@@ -192,6 +186,18 @@ function searchSongSpotify(query){
         addButtonText.innerHTML = "ADD";
         addButtonText.style.fontSize = "18px";
     }
+}
+
+function modifySearchBlock(){
+    resultBlock.style.marginTop = '80px';
+    const noSongMessage = document.createElement('p');
+    noSongMessage.setAttribute('class','noSongMessage');
+    noSongMessage.innerHTML= "modify search and try again!";
+    noSongMessage.style.fontSize = '12px';
+    noSongMessage.style.marginLeft = '14px';
+    topThreeTracks.style.height = "auto";
+    topThreeTracks.append(noSongMessage);
+    playlistViewHeader.innerHTML = "ownded playlists:";
 }
 
 /*function to get append liked playlist to the list of displayed playlists*/
