@@ -14,19 +14,19 @@ A Chrome extension that allows you to add *any* song to your spotify playlist, d
      
     Enter the title of the song, and hit enter to search!
 
-    <img src="images/spot-search.gif" width="450" height="650"/>
+    <a href="https://open.spotify.com/album/3DIkSBAbpiVqzckLlRuojY"><img src="images/spot-search.gif" width="450" height="650"/></a>
 
 - **Add to playlist(s)**
 
     Select one or more playlists to add the selected song to, simultaneously.
 
-    <img src="images/spot-add-to-playlist.gif" width="450" height="650"/>
+    <a href="https://open.spotify.com/track/5u4wpinsyz7gdHMG8pzUAQ"><img src="images/spot-add-to-playlist.gif" width="450" height="650"/></a>
 
 - **Log-out**
 
     Click on the 'sign-out' button below your username to log-out.
 
-    <img src="images/spot-logout.gif" width="450" height="650"/>
+    <a href="https://open.spotify.com/track/15yni6BXSkY79rPmi3fvfM"><img src="images/spot-logout.gif" width="450" height="650"/></a>
 
 
 ## Features
@@ -35,7 +35,7 @@ A Chrome extension that allows you to add *any* song to your spotify playlist, d
 
     If you're listening to a song on YouTube and wish to add it to one of your Spotify playlists, open SPOT in the same tab, and it will have the best match results ready for the music you are streaming on YouTube!
 
-    <img src="images/spot-youtube.gif" width="auto" height="500"/>
+    <a href="https://www.youtube.com/watch?v=NNI5R-eG4O8"><img src="images/spot-youtube.gif" width="auto" height="500"/></a>
 
 - **Search for text spotted on the internet -  Right Click & Highlight!**
 
@@ -47,7 +47,7 @@ A Chrome extension that allows you to add *any* song to your spotify playlist, d
     - Notification indicates that your search results are ready
     - Open the SPOT extension to add best match results to your playlists!
 
-    <img src="images/spot-rightclick.gif" width="auto" height="500"/>
+    <a href="https://open.spotify.com/track/2qzhDx0YbKNHWkRZj6o8rV"><img src="images/spot-rightclick.gif" width="auto" height="500"/></a>
 
 ## Local Installation Instructions
 
