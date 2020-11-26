@@ -36,7 +36,7 @@
 
     If you're listening to a song on YouTube and wish to add it to one of your Spotify playlists, open SPOT in the said tab, and it will have the best match  results ready for the music you are streaming on YouTube!
 
-    <img src="images/spot-youtube.gif" width="1000" height="1000"/>
+    <img src="images/spot-youtube.gif" width="1200" height="500"/>
 
 ## Local Installation Instructions
 
