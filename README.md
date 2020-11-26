@@ -6,7 +6,8 @@
 ## Usage
 
 - Login  & Authentication
-![login](images/spot-login.gif =100x20)
+
+<img src="images/spot-login.gif" width="400" height="250"/>
 
 ## Features
 
