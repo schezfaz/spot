@@ -30,7 +30,7 @@ A Chrome extension that allows you to add *any* song to your spotify playlist, d
 
     <a href="https://www.youtube.com/watch?v=NNI5R-eG4O8"><img src="images/spot-youtube.gif" width="auto" height="500"/></a>
 
-- **Search for text spotted on the internet -  Right Click & Highlight!**
+- **Search for text spotted on the internet - Highlight & Right Click!**
 
     Ever came across a name of a song while scrolling through reddit/instagram? Search for the corresponding song on Spotify to add to your playlists!
 
@@ -41,6 +41,12 @@ A Chrome extension that allows you to add *any* song to your spotify playlist, d
     - Open the SPOT extension to add best match results to your playlists!
 
     <a href="https://open.spotify.com/track/2qzhDx0YbKNHWkRZj6o8rV"><img src="images/spot-rightclick.gif" width="auto" height="500"/></a>
+
+- **Search for text spotted on the internet -  Highlight & CTRL + SHIFT + S!**
+
+    Trigger a spotify search for highlighted text, using the keyboard shortcut: `CTRL + SHIFT + S`
+
+    <a href="https://open.spotify.com/track/15yni6BXSkY79rPmi3fvfM"><img src="images/spot-crtlshift.gif" width="auto" height="500"/></a>
 
 ## Local Installation Instructions
 
