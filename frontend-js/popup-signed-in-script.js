@@ -363,7 +363,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
 
 document.querySelector('#sign-out').addEventListener('click', function () {
     chrome.runtime.sendMessage({ message: 'logout' }, function (response) {
-        if (response.message === 'success') window.close();
+        window.close();
     });
 });
 
