@@ -1,7 +1,6 @@
 # SPOT
-> An browser extension that allows you to directly add a song to your spotify playlist
 
-![spot-landing page](images/spot-landing.PNG) 
+A Chrome extension that allows you to  add a song to your spotify playlist, directly from your browser!
 
 ## Usage
 
@@ -9,7 +8,7 @@
 
     Click on 'sign-in & authenticate' to log in and grant access permissions.
 
-    <img src="images/spot-login.gif" width="500" height="300"/>
+    <img src="images/spot-login.gif" width="auto" height="300"/>
 
 - **Search for music & Preview**
      
@@ -32,11 +31,22 @@
 
 ## Features
 
-- **Listening on active YouTube Tab:**
+- **Add a song playing on your active YouTube Tab:**
 
-    If you're listening to a song on YouTube and wish to add it to one of your Spotify playlists, open SPOT in the said tab, and it will have the best match  results ready for the music you are streaming on YouTube!
+    If you're listening to a song on YouTube and wish to add it to one of your Spotify playlists, open SPOT in the same tab, and it will have the best match results ready for the music you are streaming on YouTube!
 
     <img src="images/spot-youtube.gif" width="auto" height="500"/>
+
+- **Search for text spotted on the internet -  Right Click & Highlight!**
+
+    Ever came across a name of a song while scrolling through reddit/instagram? Search for the corresponding song on Spotify to add to your playlists!
+
+    Steps:
+    - Highlight SPOTTED text
+    - Right Click & Select 'SPOTTED! Search on Spotify?'
+    - Notification indicates that your search results are ready
+    - Open the SPOT extension to add best match results to your playlists!
+
 
 ## Local Installation Instructions
 
