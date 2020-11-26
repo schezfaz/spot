@@ -7,6 +7,8 @@
 
 - **Login  & Authentication**
 
+    Click on 'sign-in & authenticate' to log in and grant access permissions.
+
     <img src="images/spot-login.gif" width="500" height="300"/>
 
 - **Search for music & Preview**
@@ -22,6 +24,10 @@
     <img src="images/spot-add-to-playlist.gif" width="450" height="650"/>
 
 - Log-out
+
+    Click on the 'sign-out' button below your username to log-out.
+
+    <img src="images/spot-logout.gif" width="450" height="650"/>
 
 
 
