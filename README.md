@@ -3,11 +3,17 @@
 
 ![spot-landing page](images/spot-landing.PNG) 
 
+## Usage
+
+- Login  & Authentication
+![login](images/spot-login.gif =100x20)
+
 ## Features
 
 - **Listening on active YouTube Tab:**
 
     If you're listening to a song on YouTube and wish to add it to one of your Spotify playlists, open SPOT in the said tab, and it will have the best match  results ready for the music you are streaming on YouTube!
+
 
 ## Local Installation Instructions
 
