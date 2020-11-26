@@ -23,12 +23,11 @@
 
     <img src="images/spot-add-to-playlist.gif" width="450" height="650"/>
 
-- Log-out
+- **Log-out**
 
     Click on the 'sign-out' button below your username to log-out.
 
     <img src="images/spot-logout.gif" width="450" height="650"/>
-
 
 
 ## Features
@@ -37,6 +36,7 @@
 
     If you're listening to a song on YouTube and wish to add it to one of your Spotify playlists, open SPOT in the said tab, and it will have the best match  results ready for the music you are streaming on YouTube!
 
+    <img src="images/spot-youtube.gif" width="1000" height="1000"/>
 
 ## Local Installation Instructions
 
