@@ -22,13 +22,6 @@ A Chrome extension that allows you to add *any* song to your spotify playlist, d
 
     <a href="https://open.spotify.com/track/5u4wpinsyz7gdHMG8pzUAQ"><img src="images/spot-add-to-playlist.gif" width="450" height="650"/></a>
 
-- **Log-out**
-
-    Click on the 'sign-out' button below your username to log-out.
-
-    <a href="https://open.spotify.com/track/15yni6BXSkY79rPmi3fvfM"><img src="images/spot-logout.gif" width="450" height="650"/></a>
-
-
 ## Features
 
 - **Add a song playing on your active YouTube Tab:**
