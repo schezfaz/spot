@@ -7,7 +7,19 @@
 
 - Login  & Authentication
 
-<img src="images/spot-login.gif" width="400" height="250"/>
+    <img src="images/spot-login.gif" width="500" height="300"/>
+
+- Search for music & Preview
+     
+    Enter the title of the song, and hit enter to search!
+
+    <img src="images/spot-search.gif" width="450" height="650"/>
+
+- Add to playlist(s)
+
+- Log-out
+
+
 
 ## Features
 
