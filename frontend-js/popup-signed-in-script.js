@@ -149,25 +149,26 @@ function searchSongSpotify(query){
                         }
                     }else {
                         trackSearch.value = query;
-                        modifySearchBlock();
+                        resultBlock.style.marginTop = '80px';
+                        const noSongMessage = document.createElement('p');
+                        noSongMessage.setAttribute('class','noSongMessage');
+                        noSongMessage.innerHTML= "modify search and try again!";
+                        noSongMessage.style.fontSize = '12px';
+                        noSongMessage.style.marginLeft = '14px';
+                        topThreeTracks.style.height = "auto";
+                        topThreeTracks.append(noSongMessage);
+                        playlistViewHeader.innerHTML = "ownded playlists:";
                     }
                 }else{
                     console.log("400 Status Error");
                     console.log("Error: " + songsJSON['error']['status']);
                     console.log("ACC" + ACCESS_TOKEN);
-                    modifySearchBlock();
+                    clickToSearchBlock();
                 }
             } catch(err){
-                resultBlock.style.marginTop = '80px';
                 trackSearch.value = query;
                 console.log("Caught error :" + err + " while searching for: " + query);
-                const needToClick = document.createElement('p');
-                needToClick.setAttribute('class','noSongMessage');
-                needToClick.innerHTML = 'click to search!';
-                needToClick.style.fontSize = '15px';
-                needToClick.style.marginLeft='38px';
-                topThreeTracks.style.height = "auto";
-                topThreeTracks.append(needToClick);
+                clickToSearchBlock();
             }
         });
     }else{
@@ -188,16 +189,15 @@ function searchSongSpotify(query){
     }
 }
 
-function modifySearchBlock(){
+function clickToSearchBlock(){
     resultBlock.style.marginTop = '80px';
-    const noSongMessage = document.createElement('p');
-    noSongMessage.setAttribute('class','noSongMessage');
-    noSongMessage.innerHTML= "modify search and try again!";
-    noSongMessage.style.fontSize = '12px';
-    noSongMessage.style.marginLeft = '14px';
+    const needToClick = document.createElement('p');
+    needToClick.setAttribute('class','noSongMessage');
+    needToClick.innerHTML = 'click to search!';
+    needToClick.style.fontSize = '15px';
+    needToClick.style.marginLeft='38px';
     topThreeTracks.style.height = "auto";
-    topThreeTracks.append(noSongMessage);
-    playlistViewHeader.innerHTML = "ownded playlists:";
+    topThreeTracks.append(needToClick);
 }
 
 /*function to get append liked playlist to the list of displayed playlists*/
