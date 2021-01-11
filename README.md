@@ -2,6 +2,8 @@
 
 A Chrome extension that allows you to add *any* song to your spotify playlist, directly from your browser!
 
+Install now, from the [Chrome Web Store](https://chrome.google.com/webstore/detail/spot/cciagoimobpkdkejimpkjpmcekigdejb?hl=en-GB&authuser=0)
+
 ## Usage
 
 - **Login  & Authentication**
