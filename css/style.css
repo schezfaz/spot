@@ -109,7 +109,7 @@ body::-webkit-scrollbar {
 }
 
 .singlePlaylist{
-    margin: 4px 5px;
+    margin: 4px;
     padding: 3px;
     width: 25%;
     display: inline-table;
