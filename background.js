@@ -18,7 +18,7 @@ var highlightedTextContextMenu = {
     "contexts":["selection"]
 }
 
-chrome.contextMenus.create(highlightedTextContextMenu);
+chrome.contextMenus.create(highlightedTextContextMenu, () => chrome.runtime.lastError);
 
 chrome.contextMenus.onClicked.addListener(function(highlighted){
     if(highlighted.menuItemId  == "highlightedText" && highlighted.selectionText){

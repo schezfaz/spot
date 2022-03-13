@@ -13,11 +13,16 @@ body {
     min-height: 150px;
     height: auto; 
     background-color: black;
-    border: none;
+    border: 2px solid white;
 }
 
 body::-webkit-scrollbar {
     display: none;
+}
+
+#spot-logo-title {
+    text-align: center;
+    margin: auto;
 }
 
 #spot-title {
@@ -29,7 +34,7 @@ body::-webkit-scrollbar {
 }
 
 #made-by{
-    font-size: 14px;
+    font-size: 18px;
     text-align: center;
     margin: auto;
     color: #696969;
@@ -41,7 +46,7 @@ body::-webkit-scrollbar {
 }
 
 #made-by-link:hover{
-    color: #1DB954;
+    color: #BFBFBF;
 }
 
 
@@ -272,7 +277,7 @@ table {
     color: #FFF;
 }
 
-.btnWrap {
+.btnWrap-spotify {
     color: #1DB954;
     font-family: GothamBold;
     position: absolute;
@@ -281,7 +286,16 @@ table {
     right: 10px;
 }
 
-.btn {
+.btnWrap-apple {
+    color: white;
+    font-family: GothamBold;
+    position: absolute;
+    font-size: 15px;
+    top: 10px;
+    right: 10px;
+}
+
+.btn-spotify {
 	background-image: linear-gradient(to right, #1DB954 0%, #1DB954 100%);
 	border-radius: 40px;
     box-sizing: border-box;
@@ -298,11 +312,33 @@ table {
 	z-index: 2;
 }
 
-.btn:hover {
+.btn-apple {
+	background-image: linear-gradient(to right, #fa57c1 0%, #69a6f9 100%);
+	border-radius: 40px;
+    box-sizing: border-box;
+	color: black;
+	display: block;
+	font-family: GothamBold;
+	height: 50px;
+	letter-spacing: 1px;
+    margin: 2px 0px 20px 18%;
+	position: relative;
+    text-decoration: none;
+	text-transform: uppercase;
+	width: 250px;
+	z-index: 2;
+}
+
+.btn-spotify:hover {
 	color: #fff;
 }
 
-.btn span {
+.btn-apple:hover {
+	color: #fff;
+    cursor: not-allowed;
+}
+
+.btn-spotify span {
 	align-items: center;
     background: #e7e8e9;
     padding: 1px;
@@ -314,9 +350,26 @@ table {
 	width: 100%;
 }
 
-.btn:hover span {
+.btn-apple span {
+	align-items: center;
+    background: #e7e8e9;
+    padding: 1px;
+	border-radius: 40px;
+	display: flex;
+	justify-content: center;
+	height: 100%;
+	transition: background .5s ease;
+	width: 100%;
+}
+
+.btn-spotify:hover span {
 	background: transparent;
 }
+
+.btn-apple:hover span {
+	background: transparent;
+}
+
 
 #add-song{
     width: 200px;
