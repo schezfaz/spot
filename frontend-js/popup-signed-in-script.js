@@ -83,7 +83,7 @@ function  getUserName(ACCESS_TOKEN){
 chrome.storage.sync.get('highlighted_text', result => {
     highlightedText = result['highlighted_text'];
     console.log("highlighted text: " + highlightedText);
-    if(highlightedText!=='' && highlightedText!==null && highlightedText.length > 0){
+    if(highlightedText!=='' && highlightedText!==null){
         highlightedTextActions(highlightedText);
     }
 });
