@@ -2,7 +2,7 @@
     "manifest_version" : 3,
     "name" : "SPOT",
     "version": "2.0",
-    "description": "SPOTTED a song on the web? Add it to your Spotify playlists - on the spot!",
+    "description": "SPOTTED a song on the web? Add it to your cross-platform playlists - on the spot!",
     "icons": {
         "128": "images/spot-128.png",
         "48": "images/spot-48.png",
