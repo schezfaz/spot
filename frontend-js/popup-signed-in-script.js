@@ -46,7 +46,7 @@ var toasts = new Notyf({
 
 function getToken(){
     chrome.storage.sync.get('access_token', result => {
-        console.log("ACCESS_TOKEN: " + result['access_token']);
+        //console.log("ACCESS_TOKEN: " + result['access_token']);
         ACCESS_TOKEN  = result['access_token'];
         if (ACCESS_TOKEN != undefined && ACCESS_TOKEN!='' && ACCESS_TOKEN.toString().trim().length > 0) {
             getUserName(ACCESS_TOKEN);
@@ -162,7 +162,7 @@ function searchSongSpotify(query){
                 }else{
                     console.log("400 Status Error");
                     console.log("Error: " + songsJSON['error']['status']);
-                    console.log("ACC" + ACCESS_TOKEN);
+                   // console.log("ACC" + ACCESS_TOKEN);
                     clickToSearchBlock();
                 }
             } catch(err){
@@ -376,11 +376,10 @@ document.querySelector('#sign-out').addEventListener('click', function () {
 document.querySelector('#add-song').addEventListener('click', function () {
     console.log("Selected song value: " + selectedSongID);
     console.log("Final playlists to add to: " + finalPlaylists);
-    console.log("Access Token: " + ACCESS_TOKEN);
+   // console.log("Access Token: " + ACCESS_TOKEN);
 
     if((selectedSongID!=''  && selectedSongID!=undefined && selectedSongID!=null) && (finalPlaylists.length > 0) 
         && (ACCESS_TOKEN!=undefined && ACCESS_TOKEN!='' && ACCESS_TOKEN!=null && ACCESS_TOKEN!=' ')){
-        console.log
         const finalSongName = document.getElementById(selectedSongID).innerHTML;
         // toasts.open({
         //     type: 'canAdd',
