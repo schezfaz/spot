@@ -1,7 +1,8 @@
 const CLIENT_ID = encodeURIComponent('e398a5b2c6eb42bfa305efab6caefc72'); // change this according to your Spotify OAuth Client ID
-const EXTENSION_ID = 'gfhecgoaelkeeippfcekipomkpfmdkjp'; // Change this according to your extension
+//const EXTENSION_ID = 'gfhecgoaelkeeippfcekipomkpfmdkjp'; // Change this according to your extension
+const EXTENSION_ID = 'djkcfbdkhclhijkdhcfkgoolebndbnlp';
 const RESPONSE_TYPE = encodeURIComponent('token');
-const REDIRECT_URI = encodeURIComponent('https://gfhecgoaelkeeippfcekipomkpfmdkjp.chromiumapp.org/');
+const REDIRECT_URI = encodeURIComponent('https://djkcfbdkhclhijkdhcfkgoolebndbnlp.chromiumapp.org/');
 const SHOW_DIALOG = encodeURIComponent('true');
 
 const SCOPE = ["user-library-modify","playlist-modify-private","playlist-read-collaborative","playlist-read-private", "playlist-modify-public"];
@@ -17,7 +18,7 @@ var highlightedTextContextMenu = {
     "contexts":["selection"]
 }
 
-chrome.contextMenus.create(highlightedTextContextMenu);
+chrome.contextMenus.create(highlightedTextContextMenu, () => chrome.runtime.lastError);
 
 chrome.contextMenus.onClicked.addListener(function(highlighted){
     if(highlighted.menuItemId  == "highlightedText" && highlighted.selectionText){
@@ -39,14 +40,15 @@ function create_spotify_end_point() {
 
     let oauth2_url =
         `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&redirect_uri=${REDIRECT_URI}&state=${STATE}&scope=${SCOPE}&show_dialog=${SHOW_DIALOG}`;
-    console.log(oauth2_url);
+    //console.log(oauth2_url);
+    //console.log("Redirect: " + REDIRECT_URI);
     return oauth2_url;
 }
 
 chrome.commands.onCommand.addListener(function (command) {
     console.log("command: "+command);
     if (command == "hotkey-highlight") {
-        chrome.tabs.executeScript({
+        chrome.scripting.executeScript({
             code: '(' + getSelectionText.toString() + ')()'
         }, function (results) {
             console.log("results: " + results);
@@ -102,7 +104,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 url: create_spotify_end_point(),
                 interactive: true
             }, function (redirect_url) {
-                console.log("re-direct", redirect_url);
+               // console.log("re-direct", redirect_url);
                 if (chrome.runtime.lastError) {
                     sendResponse({ message: 'fail' });
                 } else {
@@ -114,7 +116,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                         let state = redirect_url.substring(redirect_url.indexOf('state=') + 6);
                         if (state === STATE) {
                             console.log("SUCCESS");
-                            console.log("ACCESS TOKEN " + ACCESS_TOKEN)
+                            //console.log("ACCESS TOKEN " + ACCESS_TOKEN)
                             user_signed_in = true;
 
                             var access_token_obj = { "access_token": ACCESS_TOKEN };
@@ -133,7 +135,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                             //     user_signed_in = false;
                             // }, 3600000); //every 60 minutes sign the user out
 
-                            chrome.browserAction.setPopup({ popup: './popup-signed-in.html' }, () => {
+                            chrome.action.setPopup({ popup: './popup-signed-in.html' }, () => {
                                 sendResponse({ message: 'success' });
                             });
                         } else {
@@ -148,7 +150,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     else if (request.message === 'logout') {
         user_signed_in = false;
-        chrome.browserAction.setPopup({ popup: './popup.html' }, () => {
+        chrome.action.setPopup({ popup: './popup.html' }, () => {
             sendResponse({ message: 'success' });
         });
         return true;
